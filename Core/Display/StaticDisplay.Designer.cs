@@ -36,16 +36,27 @@ namespace YANMFA.Core
             // tmrGameUpdate
             // 
             this.tmrGameUpdate.Enabled = true;
+            this.tmrGameUpdate.Tick += new System.EventHandler(this.tmrGameUpdate_Tick);
             // 
             // StaticDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.DoubleBuffered = true;
+            this.MinimumSize = new System.Drawing.Size(816, 489);
             this.Name = "StaticDisplay";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "YANMFA!";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Display_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Display_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Display_KeyUp);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Display_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Display_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Display_MouseUp);
+            this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.Display_MouseWheel);
+            this.Resize += new System.EventHandler(this.Display_Resize);
             this.ResumeLayout(false);
 
         }
