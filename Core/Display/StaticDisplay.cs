@@ -9,7 +9,7 @@ namespace YANMFA.Core
     public partial class StaticDisplay : Form
     {
 
-        private static readonly HashSet<EventHandler> RESIZE_LISTENER = new HashSet<EventHandler>();
+        private static readonly List<EventHandler> RESIZE_LISTENER = new List<EventHandler>();
         private static readonly Stopwatch Stopwatch = new Stopwatch();
 
         /**
@@ -93,8 +93,8 @@ namespace YANMFA.Core
         {
             DisplayWidth = size.Width;
             DisplayHeight = size.Height;
-            foreach (EventHandler handler in RESIZE_LISTENER)
-                handler?.Invoke(sender, e);
+            for (int i = RESIZE_LISTENER.Count - 1; i >= 0; i--)
+                RESIZE_LISTENER[i]?.Invoke(sender, e);
         }
 
         [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
@@ -111,7 +111,11 @@ namespace YANMFA.Core
         }
         #endregion
 
-        public static void AddResizeListener(EventHandler handler) => RESIZE_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        public static void AddResizeListener(EventHandler handler)
+        {
+            if(!RESIZE_LISTENER.Contains(handler))
+                RESIZE_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        }
 
         public static bool RemoveResizeListener(EventHandler handler) => RESIZE_LISTENER.Remove(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
 

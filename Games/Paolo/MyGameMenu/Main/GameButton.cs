@@ -17,7 +17,8 @@ namespace YANMFA.Games.Paolo.MyGameMenu
         public override void Render(Graphics g)
         {
             base.Render(g);
-            g.DrawImage(ResizedImage, Bounds.X, Bounds.Y);
+            if(ResizedImage != null)
+                g.DrawImage(ResizedImage, Bounds.X, Bounds.Y);
             if (Bounds.Contains(StaticMouse.MouseX, StaticMouse.MouseY))
                 g.FillRectangle(HOVER_COLOR, Bounds);
         }
@@ -31,8 +32,12 @@ namespace YANMFA.Games.Paolo.MyGameMenu
 
         public override void SetBounds(int x, int y, int width, int height)
         {
-            ResizedImage?.Dispose();
-            ResizedImage = new Bitmap(Game.GetTitleImage(), new Size(width, height));
+            lock(Game.GetTitleImage())
+            { // Assure that only this thread uses SplashImage (when resizing)
+                ResizedImage?.Dispose();
+                ResizedImage = new Bitmap(Game.GetTitleImage(), new Size(width, height));
+            }
+
             base.SetBounds(x, y, width, height);
         }
 

@@ -7,10 +7,10 @@ namespace YANMFA.Core
     public class StaticMouse
     {
 
-        private static readonly HashSet<MouseEventHandler> MOUSE_DOWN_LISTENER = new HashSet<MouseEventHandler>();
-        private static readonly HashSet<MouseEventHandler> MOUSE_UP_LISTENER = new HashSet<MouseEventHandler>();
-        private static readonly HashSet<MouseEventHandler> MOUSE_MOVE_LISTENER = new HashSet<MouseEventHandler>();
-        private static readonly HashSet<MouseEventHandler> MOUSE_WHEEL_LISTENER = new HashSet<MouseEventHandler>();
+        private static readonly List<MouseEventHandler> MOUSE_DOWN_LISTENER = new List<MouseEventHandler>();
+        private static readonly List<MouseEventHandler> MOUSE_UP_LISTENER = new List<MouseEventHandler>();
+        private static readonly List<MouseEventHandler> MOUSE_MOVE_LISTENER = new List<MouseEventHandler>();
+        private static readonly List<MouseEventHandler> MOUSE_WHEEL_LISTENER = new List<MouseEventHandler>();
 
         private static readonly HashSet<MouseButtons> BUTTON_STATE_LIST = new HashSet<MouseButtons>();
 
@@ -30,16 +30,16 @@ namespace YANMFA.Core
         [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
         internal static void InvokeMouseDownListener(object sender, MouseEventArgs e)
         {
-            foreach (MouseEventHandler handler in MOUSE_DOWN_LISTENER)
-                handler?.Invoke(sender, e);
+            for (int i = MOUSE_DOWN_LISTENER.Count - 1; i >= 0; i--)
+                MOUSE_DOWN_LISTENER[i]?.Invoke(sender, e);
             BUTTON_STATE_LIST.Add(e.Button);
         }
 
         [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
         internal static void InvokeMouseUpListener(object sender, MouseEventArgs e)
         {
-            foreach (MouseEventHandler handler in MOUSE_UP_LISTENER)
-                handler?.Invoke(sender, e);
+            for (int i = MOUSE_UP_LISTENER.Count - 1; i >= 0; i--)
+                MOUSE_UP_LISTENER[i]?.Invoke(sender, e);
             BUTTON_STATE_LIST.Remove(e.Button);
         }
 
@@ -48,28 +48,44 @@ namespace YANMFA.Core
         {
             MouseX = e.Location.X;
             MouseY = e.Location.Y;
-            foreach (MouseEventHandler handler in MOUSE_MOVE_LISTENER)
-                handler?.Invoke(sender, e);
+            for (int i = MOUSE_MOVE_LISTENER.Count - 1; i >= 0; i--)
+                MOUSE_MOVE_LISTENER[i]?.Invoke(sender, e);
         }
 
         [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
         internal static void InvokeMouseWheelListener(object sender, MouseEventArgs e)
         {
             DWheel = e.Delta;
-            foreach (MouseEventHandler handler in MOUSE_WHEEL_LISTENER)
-                handler?.Invoke(sender, e);
+            for (int i = MOUSE_WHEEL_LISTENER.Count - 1; i >= 0; i--)
+                MOUSE_WHEEL_LISTENER[i]?.Invoke(sender, e);
         }
         #endregion
 
         public static bool IsButtonDown(MouseButtons button) => BUTTON_STATE_LIST.Contains(button);
 
-        public static void AddMouseDownListener(MouseEventHandler handler) => MOUSE_DOWN_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        public static void AddMouseDownListener(MouseEventHandler handler)
+        {
+            if(!MOUSE_DOWN_LISTENER.Contains(handler))
+                MOUSE_DOWN_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        }
 
-        public static void AddMouseUpListener(MouseEventHandler handler) => MOUSE_UP_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        public static void AddMouseUpListener(MouseEventHandler handler)
+        {
+            if (!MOUSE_UP_LISTENER.Contains(handler))
+                MOUSE_UP_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        }
 
-        public static void AddMouseMoveListener(MouseEventHandler handler) => MOUSE_MOVE_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        public static void AddMouseMoveListener(MouseEventHandler handler)
+        {
+            if (!MOUSE_MOVE_LISTENER.Contains(handler))
+                MOUSE_MOVE_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        }
 
-        public static void AddMouseWheelListener(MouseEventHandler handler) => MOUSE_WHEEL_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        public static void AddMouseWheelListener(MouseEventHandler handler)
+        {
+            if (!MOUSE_WHEEL_LISTENER.Contains(handler))
+                MOUSE_WHEEL_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        }
 
         public static bool RemoveMouseDownListener(MouseEventHandler handler) => MOUSE_DOWN_LISTENER.Remove(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
 

@@ -16,82 +16,82 @@ namespace YANMFA.Games.Paolo.MyGameMenu
 
         public virtual void Show()
         {
-            foreach (GuiComponent comp in this)
-                comp.Show();
+            for (int i = Count - 1; i >= 0; i--)
+                this[i].Show();
         }
 
         public virtual void Hide()
         {
-            foreach (GuiComponent comp in this)
-                comp.Hide();
+            for (int i = Count - 1; i >= 0; i--)
+                this[i].Hide();
         }
 
         public virtual void Update()
         {
-            foreach (GuiComponent comp in this)
+            for (int i = Count - 1; i >= 0; i--)
             {
-                if(comp.Visible)
-                    comp.Update();
+                if(this[i].Visible)
+                    this[i].Update();
             }
         }
 
         public virtual void Render(Graphics g)
         {
-            foreach (GuiComponent comp in this)
+            for (int i = Count - 1; i >= 0; i--)
             {
-                if (comp.Visible)
-                    comp.Render(g);
+                if (this[i].Visible)
+                    this[i].Render(g);
             }
         }
 
         public virtual void Resize(int width, int height)
         {
-            foreach (GuiComponent comp in this)
-                comp.Resize(width, height);
+            for (int i = Count - 1; i >= 0; i--)
+                this[i].Resize(width, height);
         }
 
         public virtual void MouseDown(MouseEventArgs e)
         {
-            foreach (GuiComponent comp in this)
+            for (int i = Count - 1; i >= 0; i--)
             {
-                if(comp.Active)
-                    comp.MouseDown(e);
+                if(this[i].Active)
+                    this[i].MouseDown(e);
             }
         }
 
         public virtual void MouseUp(MouseEventArgs e)
         {
-            foreach (GuiComponent comp in this)
+            for (int i = Count - 1; i >= 0; i--)
             {
-                if (comp.Active)
-                    comp.MouseUp(e);
+                if (this[i].Active)
+                    this[i].MouseUp(e);
             }
         }
 
         public virtual void MouseWheel(MouseEventArgs e)
         {
-            foreach (GuiComponent comp in this)
+            for (int i = Count - 1; i >= 0; i--)
             {
-                if (comp.Active)
-                    comp.MouseWheel(e);
+                if (this[i].Active)
+                    this[i].MouseWheel(e);
             }
         }
 
         public virtual void KeyDown(KeyEventArgs e)
         {
-            foreach (GuiComponent comp in this)
+            for (int i = Count - 1; i >= 0; i--)
             {
-                if (comp.Active)
-                    comp.KeyDown(e);
+                if (this[i].Active)
+                    this[i].KeyDown(e);
             }
         }
 
         public virtual void KeyUp(KeyEventArgs e)
         {
-            foreach (GuiComponent comp in this)
+            for (int i = Count - 1; i >= 0; i--)
             {
-                if (comp.Active)
-                    comp.KeyUp(e);
+                if (this[i].Active)
+                    this[i].KeyUp(e);
             }
         }
 
