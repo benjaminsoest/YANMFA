@@ -35,6 +35,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -97,4 +100,7 @@
     <Content Include="Assets\Paolo\MyGameMenu\yanmfa-logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy  /I /Y /S "$(ProjectDir)Assets" "$(ProjectDir)$(OutDir)Assets"</PreBuildEvent>
+  </PropertyGroup>
 </Project>
