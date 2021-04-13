@@ -30,7 +30,7 @@ namespace YANMFA.Games.Paolo.MyGameMenu
 
             float maxWidth = width;
             float maxHeight = height;
-            for(int i = 0; i < Count; i++)
+            for(int i = Count - 1; i >= 0; i--)
             {
                 Rectangle gridEntry = GridEntries[i];
                 float entryWidth = gridWidth * gridEntry.Width + padX * (gridEntry.Width - 1f);

@@ -48,7 +48,11 @@ namespace YANMFA.Games.Paolo.MyGameMenu
         }
 
         public void UpdateSplash() { }
-        public void RenderSplash(Graphics g) => g.DrawImage(SplashImage, 0f, 0f, StaticDisplay.DisplayWidth, StaticDisplay.DisplayHeight);
+        public void RenderSplash(Graphics g)
+        {
+            lock(SplashImage) // Assure that only this thread uses SplashImage (when rendered)
+                g.DrawImage(SplashImage, 0f, 0f, StaticDisplay.DisplayWidth, StaticDisplay.DisplayHeight);
+        }
 
         public void Update() => CurrentScreen?.Update();
         public void Render(Graphics g) => CurrentScreen?.Render(g);
