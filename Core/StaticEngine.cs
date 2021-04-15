@@ -22,6 +22,7 @@ namespace YANMFA.Core
             Games.Add(new GameMenu()); // Note: This has to be added as first element, since ChangeGame(null) runs the first element
             { // TODO: Add Games here
                 Games.Add(new SnakeControl());
+                Games.Add(new SnakeControl());
             }
             ChangeGame(null); // Change game to GameMenu
         }
