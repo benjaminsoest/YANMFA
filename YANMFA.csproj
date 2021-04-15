@@ -52,6 +52,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\BarrierBlock.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\Bullet.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\Crate.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\DecoBlock.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\Door.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Item.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Items\Potions.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Items\Weapon.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Level.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Mobs\Human.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Mobs\Mob.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Mobs\Spider.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Textures.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Repository\LevelRepos.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Round.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\SpiderFighterGame.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Tools\Vector.cs" />
     <Compile Include="Games\Lars\Snake\SnakeControl.cs" />
     <Compile Include="Core\Display\StaticDisplay.cs">
       <SubType>Form</SubType>
@@ -96,7 +113,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Assets\Alex\SpiderFighter\Textures\" />
+    <Folder Include="Games\Alex\SpiderFighter\Models\Interfaces\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Lars\Snake\Logo.png" />
     <Content Include="Assets\Paolo\MyGameMenu\yanmfa-logo.png" />
