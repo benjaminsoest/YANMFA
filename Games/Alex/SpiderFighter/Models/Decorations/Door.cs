@@ -7,6 +7,12 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
     {
         public bool OpenState { get; private set; }
         
+        public Door(RectangleF rectangle, Bitmap bitmap)
+        {
+            Hitbox = rectangle;
+            CurrentTexture = bitmap;
+        }
+
         public override void Render(Graphics graphics)
         {
 

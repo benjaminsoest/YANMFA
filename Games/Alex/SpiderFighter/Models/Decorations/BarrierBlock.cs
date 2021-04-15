@@ -7,6 +7,11 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
     {
         private RectangleF _hitbox;
 
+        public BarrierBlock(RectangleF rec, Bitmap texture)
+        {
+
+        }
+
         public override RectangleF Hitbox
         {
             get { return _hitbox; }

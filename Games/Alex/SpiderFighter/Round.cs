@@ -47,80 +47,83 @@ namespace YANMFA.Games.Alex.SpiderFighter
             
         }
 
-        //public static void LoadLevels()
-        //{
-        //    DirectoryInfo info = new DirectoryInfo(Environment.CurrentDirectory + "\\levels");
-        //    foreach (FileInfo item in info.GetFiles())
-        //    {
-        //        string currentstring = "";
-        //        List<string> lines = new List<string>();
-        //        Level level = new Level();
+        public static void LoadLevels()
+        {
+            DirectoryInfo info = new DirectoryInfo(Environment.CurrentDirectory + "\\levels");
+            foreach (FileInfo item in info.GetFiles())
+            {
+                string currentstring = "";
+                List<string> lines = new List<string>();
+                Level level = new Level();
 
-        //        StreamReader stream = item.OpenText();
-        //        string fullText = stream.ReadToEnd();
+                StreamReader stream = item.OpenText();
+                string fullText = stream.ReadToEnd();
 
-        //        for (int i = 0; i < fullText.Length; i++)
-        //        {
-        //            if (fullText[i] != '>')
-        //            {
-        //                currentstring = currentstring + fullText[i];
-        //            }
-        //            else
-        //            {
-        //                currentstring.Replace('>', '\0');
-        //                currentstring = currentstring.Replace("\r\n", "");
-        //                lines.Add(currentstring);
-        //                currentstring = "";
-        //            }
-        //        }
+                for (int i = 0; i < fullText.Length; i++)
+                {
+                    if (fullText[i] != '>')
+                    {
+                        currentstring = currentstring + fullText[i];
+                    }
+                    else
+                    {
+                        currentstring.Replace('>', '\0');
+                        currentstring = currentstring.Replace("\r\n", "");
+                        lines.Add(currentstring);
+                        currentstring = "";
+                    }
+                }
 
-        //        foreach (string line in lines)
-        //        {
-        //            string currentdata = "";
+                foreach (string line in lines)
+                {
+                    string currentdata = "";
 
-        //            List<string> data = new List<string>();
-        //            for (int i = 0; i < line.Length; i++)
-        //            {
-        //                if (line[i] != ';')
-        //                {
-        //                    currentdata = currentdata + line[i];
-        //                }
-        //                else
-        //                {
-        //                    currentdata.Replace(';', '\0');
-        //                    data.Add(currentdata);
-        //                    currentdata = "";
-        //                }
-        //            }
+                    List<string> data = new List<string>();
+                    for (int i = 0; i < line.Length; i++)
+                    {
+                        if (line[i] != ';')
+                        {
+                            currentdata = currentdata + line[i];
+                        }
+                        else
+                        {
+                            currentdata.Replace(';', '\0');
+                            data.Add(currentdata);
+                            currentdata = "";
+                        }
+                    }
+                    Textures.ItemBitmaps.TryGetValue("IronDoorClose", out Bitmap bitmap1);
+                    switch (data[0])
+                    {
+                        
+                        case "Block":
+                            if (data[6] == "True")
+                            {
+                                Textures.ItemBitmaps.TryGetValue(data[5], out Bitmap bitmap);
+                                var barrier = new BarrierBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])), bitmap);
+                                level.Items.Add(barrier);
+                            }
+                            else if (data[6] == "False")
+                            {
+                                Textures.ItemBitmaps.TryGetValue(data[5], out Bitmap bitmap);
+                                var decoblock = new BarrierBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])),bitmap);
+                                level.Items.Add(decoblock);
+                            }
+                            break;
+                        case "Door":
+                            var door = new Door(
+                                new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]),
+                                    (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])), bitmap1);
 
-        //            switch (data[0])
-        //            {
-        //                case "Block":
-        //                    if (data[6] == "True")
-        //                    {
-        //                        var barrier = new BarrierBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])), Item.TextureConverter((Item.ItemTextures)(Enum.Parse(typeof(Item.ItemTextures), data[5]))));
-        //                        level.Items.Add(barrier);
-        //                    }
-        //                    else if (data[6] == "False")
-        //                    {
-        //                        var decoblock = new BarrierBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])), Item.TextureConverter((Item.ItemTextures)(Enum.Parse(typeof(Item.ItemTextures), data[5]))));
-        //                        level.Items.Add(decoblock);
-        //                    }
-        //                    break;
-        //                case "Door":
-        //                    var door = new Door(
-        //                        new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]),
-        //                            (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])),
-        //                        Textures.IrondoorClose);
-        //                    level.Doors.Add(door);
-        //                    break;
+                            level.Items.Add(door);
+                            break;
 
-        //                default:
-        //                    break;
-        //            }
-        //        }
-        //        Levels.Add(level);
-        //    }
-        //}
+                        default:
+                            break;
+                    }
+                }
+                Levels.Add(level);
+            }
+        }
     }
 }

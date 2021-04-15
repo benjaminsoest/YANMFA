@@ -15,7 +15,8 @@ namespace YANMFA.Games.Alex.SpiderFighter
             "I know it you hate them as well! Spiders ! Play Spider Fighter today and lose your friends and spiders";
         public void Start()
         {
-            Round.CurrentLevel = new Models.Level();
+            Round.LoadLevels();
+            Round.CurrentLevel = Round.Levels[0];
             StaticDisplay.AddResizeListener(Resize);
             StaticMouse.AddMouseDownListener(MouseDown);
             StaticKeyboard.AddKeyDownListener(KeyDown);
@@ -39,8 +40,7 @@ namespace YANMFA.Games.Alex.SpiderFighter
         public bool IsStopRequested() => false;
 
         public Image GetTitleImage() => SplashImage;
-        
-        
+                
         private void Resize(object sender, EventArgs e) => Round.Resize(StaticDisplay.DisplayWidth, StaticDisplay.DisplayHeight);
         private void MouseDown(object sender, MouseEventArgs e) => Round.MouseDown(e);
         private void KeyDown(object sender, KeyEventArgs e) => Round.KeyDown(e);

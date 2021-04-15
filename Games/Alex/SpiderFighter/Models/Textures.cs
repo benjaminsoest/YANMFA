@@ -15,7 +15,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models
         {
             string rootpath = "./Assets/Alex/SpiderFighter/Textures/";
             
-                                ItemBitmaps = new Dictionary<string, Bitmap>();
+            ItemBitmaps = new Dictionary<string, Bitmap>();
             ItemBitmaps.Add("Stone", new Bitmap(rootpath + "Floortexture1.png"));
             ItemBitmaps.Add("Crate", new Bitmap(rootpath + "crate.png"));
             ItemBitmaps.Add("WoodPlank", new Bitmap(rootpath + "woodplank1.png"));
