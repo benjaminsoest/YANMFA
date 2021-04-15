@@ -117,6 +117,7 @@
     <Folder Include="Games\Alex\SpiderFighter\Models\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Alex\SpiderFighter\Levels\Test1.txt" />
     <Content Include="Assets\Alex\SpiderFighter\Textures\Background.png" />
     <Content Include="Assets\Alex\SpiderFighter\Textures\bookshelf.png" />
     <Content Include="Assets\Alex\SpiderFighter\Textures\brick.png" />

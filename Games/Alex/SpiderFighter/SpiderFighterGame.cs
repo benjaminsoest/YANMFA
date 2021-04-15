@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using YANMFA.Core;
+using YANMFA.Games.Alex.SpiderFighter.Models;
+using YANMFA.Games.Alex.SpiderFighter.Models.Mobs;
 
 namespace YANMFA.Games.Alex.SpiderFighter
 {
@@ -15,8 +17,10 @@ namespace YANMFA.Games.Alex.SpiderFighter
             "I know it you hate them as well! Spiders ! Play Spider Fighter today and lose your friends and spiders";
         public void Start()
         {
-           // Round.LoadLevels();
-            //Round.CurrentLevel = Round.Levels[0];
+            Textures.LoadTextures();
+            Round.LoadLevels();
+            Round.CurrentLevel = Round.Levels[0];
+            Round.CurrentLevel.Mobs.Add(new Human());
             StaticDisplay.AddResizeListener(Resize);
             StaticMouse.AddMouseDownListener(MouseDown);
             StaticKeyboard.AddKeyDownListener(KeyDown);

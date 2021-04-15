@@ -49,7 +49,9 @@ namespace YANMFA.Games.Alex.SpiderFighter
 
         public static void LoadLevels()
         {
-            DirectoryInfo info = new DirectoryInfo(Environment.CurrentDirectory + "\\levels");
+            Levels = new List<Level>();
+
+            DirectoryInfo info = new DirectoryInfo("./Assets/Alex/SpiderFighter/Levels/");
             foreach (FileInfo item in info.GetFiles())
             {
                 string currentstring = "";
@@ -94,8 +96,7 @@ namespace YANMFA.Games.Alex.SpiderFighter
                     }
                     Textures.ItemBitmaps.TryGetValue("IronDoorClose", out Bitmap bitmap1);
                     switch (data[0])
-                    {
-                        
+                    {                        
                         case "Block":
                             if (data[6] == "True")
                             {
@@ -117,12 +118,11 @@ namespace YANMFA.Games.Alex.SpiderFighter
 
                             level.Items.Add(door);
                             break;
-
                         default:
                             break;
                     }
                 }
-                Levels.Add(level);
+                Levels.Add(level);               
             }
         }
     }

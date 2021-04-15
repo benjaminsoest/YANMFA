@@ -29,12 +29,15 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
         public Human()
         {
             _hitbox = new RectangleF(new PointF(20F, 30F), new SizeF(50F, 150F));
+            Textures.MobBitmaps.TryGetValue("HumanRight", out Bitmap img);
+            CurrentTexture = img;
             Healthpoints = 100;
         }
         
         public override void Render(Graphics g)
         {
             g.DrawImage(CurrentTexture,Hitbox);
+            
         }
 
         public override void Update()
@@ -56,8 +59,8 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
                 {
                     if (_DeltaJumpHeight < maxJumpHeight)
                     {
-                        _DeltaJumpHeight += 27 * (int)StaticDisplay.FixedDelta;
-                        _hitbox.Y -= 27 * (float)StaticDisplay.FixedDelta;
+                        _DeltaJumpHeight += 25 * (int)StaticDisplay.FixedDelta;
+                        _hitbox.Y -= 25 * (float)StaticDisplay.FixedDelta;
                     }
                     else if (_hitbox.Bottom >= StaticDisplay.DisplayHeight - 70 || IsCollision())
                     {
