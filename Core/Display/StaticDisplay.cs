@@ -76,7 +76,7 @@ namespace YANMFA.Core
         private void Display_Resize(object sender, EventArgs e)
         {
             StaticDisplay.InvokeResizeListener(ClientSize, sender, e);
-            tmrGameUpdate_Tick(this, EventArgs.Empty); // Update Game when Resizing
+            Refresh(); // Refresh screen when resizing
         }
 
         private void Display_MouseDown(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseDownListener(sender, e);
