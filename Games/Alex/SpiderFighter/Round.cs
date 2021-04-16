@@ -115,7 +115,7 @@ namespace YANMFA.Games.Alex.SpiderFighter
                             else if (data[6] == "False")
                             {
                                 Textures.ItemBitmaps.TryGetValue(data[5], out Bitmap bitmap);
-                                var decoblock = new BarrierBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])),bitmap);
+                                var decoblock = new DecoBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])),bitmap);
                                 level.Items.Add(decoblock);
                             }
                             break;
