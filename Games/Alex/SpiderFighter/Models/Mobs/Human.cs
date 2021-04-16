@@ -36,7 +36,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
         
         public override void Render(Graphics g)
         {           
-            g.DrawImage(CurrentTexture,Hitbox);                    
+            g.DrawImage(CurrentTexture,Hitbox);                
         }
 
         public override void Update()
@@ -67,13 +67,11 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
                         _currentWalkDir = WalkDirection.None;
                         return;
                     }
-
                 }
                 
                 // Animation when running to the right
                 if (_currentWalkDir == WalkDirection.Right)
-                {
-                    
+                {                    
                     if (_DeltaWalk < maxWalkWidth)
                     {
                         Textures.MobBitmaps.TryGetValue("HumanRightWalk", out Bitmap bitmap);
@@ -96,8 +94,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
 
                 // Animation when running to the left
                 if (_currentWalkDir == WalkDirection.Left)
-                {
-
+                {                    
                     if (_DeltaWalk < maxWalkWidth)
                     {
                         Textures.MobBitmaps.TryGetValue("HumanLeftWalk", out Bitmap bitmap);
