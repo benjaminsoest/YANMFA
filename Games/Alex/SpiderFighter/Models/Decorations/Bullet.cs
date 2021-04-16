@@ -11,15 +11,17 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
         private RectangleF _hitbox;
         private bool _isMoving = false;
         
-        public int FireSpeed { get; set; }
+        public float FireSpeed { get; set; }
         public Vector ConnectVec { get; set; }
         public Vector StartVec { get; set; }
 
-        public Bullet(Vector connectVec, Vector startVec, int firestpeed)
+        public Bullet(Vector connectVec, Vector startVec, float firestpeed)
         {
             ConnectVec = connectVec;
             StartVec = startVec;
             FireSpeed = firestpeed;
+            Hitbox = new RectangleF(StartVec.ToPoint(), new SizeF(10, 10));
+            Round.CurrentLevel.Items.Add(this);
         }
         
         public override RectangleF Hitbox
@@ -44,8 +46,8 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
             ProofLocationValidity();
             if ((_hitbox.X < StaticDisplay.DisplayWidth + StartVec.X) && (_hitbox.X > 0) && (_hitbox.Y > 0) && (_hitbox.Y < StaticDisplay.DisplayHeight))
             {
-                _hitbox.X += _hitbox.X * (float)StaticDisplay.FixedDelta;
-                _hitbox.Y += _hitbox.Y * (float)StaticDisplay.FixedDelta;
+                _hitbox.X += ConnectVec.X;
+                _hitbox.Y += ConnectVec.Y;
             }
         }
         
@@ -55,14 +57,14 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
 
         void ProofLocationValidity()
         {
-            foreach (BarrierBlock VARIABLE in Round.CurrentLevel.Items)
-            {
-                if (VARIABLE.Hitbox.IntersectsWith(_hitbox))
-                {
-                    NeutralizeBullet();
-                    return;
-                }
-            }
+            //foreach (Item VARIABLE in Round.CurrentLevel.Items)
+            //{
+            //    if (VARIABLE is BarrierBlock && VARIABLE.Hitbox.IntersectsWith(_hitbox))
+            //    {
+            //        NeutralizeBullet();
+            //        return;
+            //    }
+            //}
         }
 
         void NeutralizeBullet()

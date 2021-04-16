@@ -28,7 +28,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Tools
         {
             return new Vector(a.X / d, a.Y / d);
         }
-        public static Vector ConvertUnitVector (Vector a, int d)
+        public static Vector ConvertUnitVector (Vector a, float d)
         {
             float sign = (float)Math.Sqrt((a.X * a.X) + (a.Y * a.Y));
             float kehrSign = d / (sign);

@@ -17,10 +17,11 @@ namespace YANMFA.Games.Alex.SpiderFighter
             "I know it you hate them as well! Spiders ! Play Spider Fighter today and lose your friends and spiders";
         public void Start()
         {
+            StaticDisplay.FPSCap = 150;
             Textures.LoadTextures();
             Round.LoadLevels();
             Round.CurrentLevel = Round.Levels[0];
-            Round.CurrentLevel.Mobs.Add(new Human());
+            Round.PlayerOne = new Human();
             StaticDisplay.AddResizeListener(Resize);
             StaticMouse.AddMouseDownListener(MouseDown);
             StaticKeyboard.AddKeyDownListener(KeyDown);
@@ -28,6 +29,7 @@ namespace YANMFA.Games.Alex.SpiderFighter
 
         public void Stop()
         {
+            StaticDisplay.FPSCap = 60;
             StaticDisplay.RemoveResizeListener(Resize);
             StaticMouse.RemoveMouseDownListener(MouseDown);
             StaticKeyboard.RemoveKeyDownListener(KeyDown);

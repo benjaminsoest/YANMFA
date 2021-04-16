@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Dynamic;
 using System.IO;
 using System.Windows.Forms;
+using YANMFA.Core;
 using YANMFA.Games.Alex.SpiderFighter.Models;
 using YANMFA.Games.Alex.SpiderFighter.Models.Decorations;
 using YANMFA.Games.Alex.SpiderFighter.Models.Mobs;
@@ -16,28 +17,35 @@ namespace YANMFA.Games.Alex.SpiderFighter
         
         public static List<Level> Levels { get; set; }
 
+        public static Human PlayerOne { get; set; }
+
         public static void Update()
         {
             foreach (var item in CurrentLevel.Items) {item.Update();}
             foreach (var mob in CurrentLevel.Mobs) {mob.Update();}
+            PlayerOne.Update();
         }
 
         public static void Render(Graphics g)
         {
+            g.TranslateTransform(-PlayerOne.Hitbox.X + StaticDisplay.DisplayWidth / 2, -PlayerOne.Hitbox.Y + StaticDisplay.DisplayHeight / 2);
             foreach (var item in CurrentLevel.Items){item.Render(g);}
             foreach (var mobs in CurrentLevel.Mobs){mobs.Render(g);}
+            PlayerOne.Render(g);
         }
 
         public static void MouseDown(MouseEventArgs e)
         {
             foreach (var item in CurrentLevel.Items){item.MouseDown(e);}
             foreach (var mobs in CurrentLevel.Mobs){mobs.MouseDown(e);}
+            PlayerOne.MouseDown(e);
         }
 
         public static void KeyDown(KeyEventArgs e)
         {
             foreach (var item in CurrentLevel.Items){item.KeyDown(e);}
             foreach (var mobs in CurrentLevel.Mobs){mobs.KeyDown(e);}
+            PlayerOne.KeyDown(e);
         }
            
         public static void Resize(int width, int height)

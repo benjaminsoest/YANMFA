@@ -35,9 +35,8 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
         }
         
         public override void Render(Graphics g)
-        {
-            g.DrawImage(CurrentTexture,Hitbox);
-            
+        {           
+            g.DrawImage(CurrentTexture,Hitbox);                    
         }
 
         public override void Update()
@@ -125,7 +124,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
         {
             if (e.Button == MouseButtons.Left)
             {
-                Shoot(new Vector(_hitbox.Right,_hitbox.Y)  | Vector.VectorConverter(new PointF((_hitbox.X - StaticDisplay.DisplayWidth/2)+ e.Location.X, (_hitbox.Y - StaticDisplay.DisplayHeight / 2) + e.Location.Y)),new Vector(e.X,e.Y));
+                Shoot(new Vector(Hitbox.Right,Hitbox.Y)  | Vector.VectorConverter(new PointF((_hitbox.X - StaticDisplay.DisplayWidth/2)+ e.Location.X, (_hitbox.Y - StaticDisplay.DisplayHeight / 2) + e.Location.Y)),new Vector(Hitbox.X,Hitbox.Y));
             }
         }
 
@@ -163,9 +162,9 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
 
         bool IsCollision()
         {
-            foreach (BarrierBlock VARIABLE in Round.CurrentLevel.Items)
+            foreach (Item VARIABLE in Round.CurrentLevel.Items)
             {
-                if (VARIABLE.Hitbox.IntersectsWith(_hitbox))
+                if ((VARIABLE is BarrierBlock || VARIABLE is Door) && VARIABLE.Hitbox.IntersectsWith(_hitbox))
                 {
                     return true;
                 }
