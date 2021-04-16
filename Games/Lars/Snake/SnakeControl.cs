@@ -13,6 +13,7 @@ namespace YANMFA.Games.Lars.Snake
     {
         public string GameName => "Snake";
         public string GameDescription => "Play as a Snake and try to gather as many fruits as possible";
+        public GameMode GameType => GameMode.SINGLEPLAYER; // Visited by Paolo V. (Please implement this) NOTE: See IGameInstance.cs documentation
 
         Rectangle[,] field;
         int[] direction, lastDirection, posBerry, posHead;
@@ -83,7 +84,7 @@ namespace YANMFA.Games.Lars.Snake
         {
         }
 
-        public void Start()
+        public void Start(GameMode mode) // Visited by Paolo V. (Please implement this) NOTE: See IGameInstance.cs documentation
         {
             StaticKeyboard.AddKeyDownListener(KeyDown);
         }

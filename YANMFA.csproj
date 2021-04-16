@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CB08906E-C1D3-4668-8B35-F2CEE6C6730E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>GDI_GameEngine</RootNamespace>
-    <AssemblyName>GDI_GameEngine</AssemblyName>
+    <RootNamespace>YANMFA</RootNamespace>
+    <AssemblyName>YANMFA</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -83,8 +83,11 @@
     <Compile Include="Games\Paolo\MyGameMenu\GameMenu.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\GuiComponent.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\Layout\GridLayout.cs" />
+    <Compile Include="Games\Paolo\MyGameMenu\Layout\RelativeLayout.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\Main\GameButton.cs" />
-    <Compile Include="Games\Paolo\MyGameMenu\Main\GuiMainMenu.cs" />
+    <Compile Include="Games\Paolo\MyGameMenu\Main\GuiModeMenu.cs" />
+    <Compile Include="Games\Paolo\MyGameMenu\Main\GuiGameMenu.cs" />
+    <Compile Include="Games\Paolo\MyGameMenu\Main\ModeButton.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\NavComponent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -147,6 +151,8 @@
     <Content Include="Assets\Alex\SpiderFighter\Textures\woodplank1.png" />
     <Content Include="Assets\Alex\SpiderFighter\Textures\woodwall.png" />
     <Content Include="Assets\Lars\Snake\Logo.png" />
+    <Content Include="Assets\Paolo\MyGameMenu\multiplayer.png" />
+    <Content Include="Assets\Paolo\MyGameMenu\singleplayer.png" />
     <Content Include="Assets\Paolo\MyGameMenu\yanmfa-logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

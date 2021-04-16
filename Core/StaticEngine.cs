@@ -25,7 +25,7 @@ namespace YANMFA.Core
                 Games.Add(new SnakeControl());
                 Games.Add(new SpiderFighterGame());
             }
-            ChangeGame(null); // Change game to GameMenu
+            ChangeGame(null, GameMode.SINGLEPLAYER); // Change game to GameMenu
         }
 
         private StaticEngine() { }
@@ -35,7 +35,7 @@ namespace YANMFA.Core
          * Stops the previous game and starts a new one in a new thread.
          */
         [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
-        public static void ChangeGame(IGameInstance game)
+        public static void ChangeGame(IGameInstance game, GameMode mode)
         {
             IGameInstance tmpGame = CurrentGame;
             CurrentGame = game ?? Games[0];
@@ -44,7 +44,7 @@ namespace YANMFA.Core
             new Thread(new ThreadStart(() =>
             {
                 tmpGame?.Stop();
-                CurrentGame?.Start();
+                CurrentGame?.Start(mode);
                 IsGameRunning = true;
             })).Start();
         }

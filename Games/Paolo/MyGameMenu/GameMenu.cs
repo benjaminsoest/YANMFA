@@ -12,16 +12,29 @@ namespace YANMFA.Games.Paolo.MyGameMenu
 
         public string GameName => "Game Menu";
         public string GameDescription => "A game selection menu, to start games";
+        public GameMode GameType => GameMode.SINGLE_AND_MULTIPLAYER; // TODO: Change
 
-        public GuiMainMenu GuiMainMenu { get; } = new GuiMainMenu()
-        {
-            Visible = true,
-            Active = true
-        };
+        public GuiGameMenu GuiGameMenu { get; }
+        public GuiModeMenu GuiModeMenu { get; }
 
         public GuiComponent CurrentScreen { get; private set; }
 
-        public void Start()
+        public GameMenu()
+        {
+            GuiGameMenu = new GuiGameMenu(this)
+            {
+                Visible = true,
+                Active = true
+            };
+
+            GuiModeMenu = new GuiModeMenu(this)
+            {
+                Visible = true,
+                Active = true
+            };
+        }
+
+        public void Start(GameMode mode)
         {
             StaticDisplay.AddResizeListener(Resize);
 
@@ -31,7 +44,7 @@ namespace YANMFA.Games.Paolo.MyGameMenu
 
             StaticKeyboard.AddKeyDownListener(KeyDown);
             StaticKeyboard.AddKeyUpListener(KeyUp);
-            ChangeScreen(GuiMainMenu);
+            ChangeScreen(GuiGameMenu);
         }
 
         public void Stop()
