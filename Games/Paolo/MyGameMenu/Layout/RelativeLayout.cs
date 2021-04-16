@@ -4,20 +4,14 @@ using System.Drawing;
 
 namespace YANMFA.Games.Paolo.MyGameMenu
 {
-    class GridLayout : GuiComponent
+    class RelativeLayout : GuiComponent
     {
 
-        private readonly List<Rectangle> GridEntries = new List<Rectangle>();
+        private readonly List<RectangleF> RelativeEntries = new List<RectangleF>();
 
-        public int Cols { get; set; }
-        public int Rows { get; set; }
-
-        public float PaddingX { get; set; }
-        public float PaddingY { get; set; }
-
-        public void Add(GuiComponent item, Rectangle gridEntry)
+        public void Add(GuiComponent item, RectangleF relativeEntry)
         {
-            GridEntries.Add(gridEntry);
+            RelativeEntries.Add(relativeEntry);
             base.Add(item);
         }
 
@@ -26,35 +20,31 @@ namespace YANMFA.Games.Paolo.MyGameMenu
 
         public new void RemoveAt(int index)
         {
-            GridEntries.RemoveAt(index);
+            RelativeEntries.RemoveAt(index);
             base.RemoveAt(index);
         }
 
         public new void Clear()
         {
-            GridEntries.Clear();
+            RelativeEntries.Clear();
             base.Clear();
         }
 
         public override void SetBounds(int x, int y, int width, int height)
         {
-            float padX = width * PaddingX;
-            float padY = height * PaddingY;
-            float gridWidth = width / Cols - padX * (1f + 1f / Cols);
-            float gridHeight = height / Rows - padY * (1f + 1f / Rows);
-
             float maxWidth = width;
             float maxHeight = height;
+
             for(int i = Count - 1; i >= 0; i--)
             {
-                Rectangle gridEntry = GridEntries[i];
-                float entryWidth = gridWidth * gridEntry.Width + padX * (gridEntry.Width - 1f);
-                float entryHeight = gridHeight * gridEntry.Height + padY * (gridEntry.Height - 1f);
+                RectangleF relativeEntry = RelativeEntries[i];
+                float entryWidth = (int)(width * relativeEntry.Width);
+                float entryHeight = (int)(height * relativeEntry.Height);
                 if (entryWidth < 0f || entryHeight < 0f)
                     throw new InvalidOperationException();
 
-                float entryX = padX + (padX + gridWidth) * gridEntry.X;
-                float entryY = padY + (padY + gridHeight) * gridEntry.Y;
+                float entryX = (int)(width * relativeEntry.X);
+                float entryY = (int)(height * relativeEntry.Y);
 
                 GuiComponent comp = this[i];
                 comp.SetBounds((int)(x + entryX), (int)(y + entryY), (int)entryWidth, (int)entryHeight);
@@ -64,7 +54,7 @@ namespace YANMFA.Games.Paolo.MyGameMenu
                     maxHeight = entryY + comp.Bounds.Height;
             }
 
-            base.SetBounds(x, y, (int) (maxWidth + padX), (int) (maxHeight + padY));
+            base.SetBounds(x, y, (int)maxWidth, (int)maxHeight);
         }
 
     }

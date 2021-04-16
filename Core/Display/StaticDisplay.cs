@@ -70,7 +70,7 @@ namespace YANMFA.Core
 
             // Goes back to GameMenu when game requested to stop
             if (StaticEngine.CurrentGame.IsStopRequested())
-                StaticEngine.ChangeGame(null);
+                StaticEngine.ChangeGame(null, GameMode.SINGLEPLAYER);
         }
 
         private void Display_Resize(object sender, EventArgs e)
