@@ -56,6 +56,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\BarrierBlock.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\Bullet.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\Crate.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\DecoBlock.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\Door.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Item.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Items\Potions.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Items\Weapon.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Level.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Mobs\Human.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Mobs\Mob.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Mobs\Spider.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Textures.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Repository\LevelRepos.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Round.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\SpiderFighterGame.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Tools\Vector.cs" />
     <Compile Include="Games\Lars\Snake\SnakeBerry.cs" />
     <Compile Include="Games\Lars\Snake\SnakeControl.cs" />
     <Compile Include="Core\Display\StaticDisplay.cs">
@@ -107,8 +124,39 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="Games\Alex\SpiderFighter\Models\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Alex\SpiderFighter\Levels\Test1.txt" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\Background.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\bookshelf.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\brick.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\brickstone.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\crate.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\deepdark.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\dirt2.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\download.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\Floortexture1.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\grass1.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\humanleft.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\humanleftwalk.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\humanright.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\humanrightwalk.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\irondoor.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\irondoorclose.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\Rastergrafik.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\rifleleft.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\rifleleftshoot.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\rifleright.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\riflerightshoot.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\table.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\torch.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\window.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\wood1.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\woodcorner.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\woodplank1.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\woodwall.png" />
     <Content Include="Assets\Lars\Snake\Logo.png" />
     <Content Include="Assets\Paolo\MyGameMenu\multiplayer.png" />
     <Content Include="Assets\Paolo\MyGameMenu\singleplayer.png" />

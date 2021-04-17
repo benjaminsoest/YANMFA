@@ -3,6 +3,7 @@ using YANMFA.Games.Lars.Snake;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using YANMFA.Games.Alex.SpiderFighter;
 
 namespace YANMFA.Core
 {
@@ -22,6 +23,7 @@ namespace YANMFA.Core
             Games.Add(new GameMenu()); // Note: This has to be added as first element, since ChangeGame(null) runs the first element
             { // TODO: Add Games here
                 Games.Add(new SnakeControl());
+                Games.Add(new SpiderFighterGame());
             }
             ChangeGame(null, GameMode.SINGLEPLAYER); // Change game to GameMenu
         }
