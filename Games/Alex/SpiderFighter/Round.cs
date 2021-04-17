@@ -23,6 +23,7 @@ namespace YANMFA.Games.Alex.SpiderFighter
 
         public static void Update()
         {
+            PlayerOne.Update();
             for (int i = CurrentLevel.Items.Count - 1; i >= 0; i--)
             {
                 CurrentLevel.Items[i].Update();
@@ -34,8 +35,7 @@ namespace YANMFA.Games.Alex.SpiderFighter
             for (int i = Bullets.Count -1; i >= 0; i--)
             {
                 Bullets[i].Update();
-            }
-            PlayerOne.Update();
+            }            
         }
 
         public static void Render(Graphics g)
@@ -64,8 +64,7 @@ namespace YANMFA.Games.Alex.SpiderFighter
         public static void Resize(int width, int height)
         {
             foreach (var item in CurrentLevel.Items){item.Resize(width,height);}
-            foreach (var mobs in CurrentLevel.Mobs){mobs.Resize(width,height);}
-            
+            foreach (var mobs in CurrentLevel.Mobs){mobs.Resize(width,height);}            
         }
 
         public static void LoadLevels()

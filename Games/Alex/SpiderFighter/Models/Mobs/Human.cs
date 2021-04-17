@@ -68,7 +68,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
                 }
                                
                 // Gravity
-                if (_hitbox.Y < StaticDisplay.DisplayHeight - Hitbox.Height)
+                if (_hitbox.Y < Hitbox.Y + StaticDisplay.DisplayHeight/2)
                 {
                     _hitbox.Y += Gravity * (float)StaticDisplay.FixedDelta;
                 }
