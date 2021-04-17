@@ -38,7 +38,7 @@ namespace YANMFA.Games.Lars.Snake
             newHead.X += (int)direction.X;
             newHead.Y += (int)direction.Y;
 
-            if (newHead.X >= 0 && newHead.X < fieldLength && newHead.Y >= 0 && newHead.Y < fieldHeight && !ControlIntersection(newHead, combinedBodys))
+            if (newHead.X >= 0 && newHead.X < fieldLength && newHead.Y >= 0 && newHead.Y < fieldHeight && !ControlIntersection(newHead, combinedBodys, true))
             {
                 bool newPart = false;
                 if (BerryCollision(p) >= 0)
@@ -60,14 +60,24 @@ namespace YANMFA.Games.Lars.Snake
             }
         }
 
-        public bool ControlIntersection(Point p, List<Point>[] snakeBodys)
+        public bool ControlIntersection(Point p, List<Point>[] snakeBodys, bool lastItem)
         {
             foreach (var item in snakeBodys)
             {
-                if (item.Contains(p) && p != item[0])
+                if (lastItem)
                 {
-                    return true;
+                    if (item.Contains(p) && p != item[0])
+                    {
+                        return true;
+                    }
                 }
+                else
+                {
+                    if (item.Contains(p))
+                    {
+                        return true;
+                    }
+                }               
             }
             return false;
         }

@@ -28,7 +28,7 @@ namespace YANMFA.Games.Lars.Snake
                 control = true;
                 newBerry.X = rnd.Next(width);
                 newBerry.Y = rnd.Next(height);
-                if (player[0].ControlIntersection(newBerry, snakeBodys))
+                if (player[0].ControlIntersection(newBerry, snakeBodys, false))
                 {
                         control = false;
                 }              
