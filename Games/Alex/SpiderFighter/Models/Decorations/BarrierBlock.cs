@@ -29,20 +29,11 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
             MobResistance();
         }
 
-        public override void MouseDown(MouseEventArgs mouseEventArgs)
-        {
-
-        }
-
         public override void Resize(int width, int height)
         {
-        }
-
-        public override void KeyDown(KeyEventArgs keyEventArgs)
-        {
 
         }
-
+      
         public void MobResistance()
         {
             RectangleF rec = Round.PlayerOne.Hitbox;

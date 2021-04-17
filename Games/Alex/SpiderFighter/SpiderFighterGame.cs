@@ -20,11 +20,14 @@ namespace YANMFA.Games.Alex.SpiderFighter
 
         public void Start(GameMode mode)
         {
+            Round.StartHeight = StaticDisplay.DisplayHeight;
+            Round.StartWidth = StaticDisplay.DisplayWidth;
             StaticDisplay.FPSCap = 150;
             Textures.LoadTextures();
             Round.LoadLevels();
             Round.CurrentLevel = Round.Levels[0];
             Round.PlayerOne = new Human();
+
             StaticDisplay.AddResizeListener(Resize);
             StaticMouse.AddMouseDownListener(MouseDown);
             StaticKeyboard.AddKeyDownListener(KeyDown);

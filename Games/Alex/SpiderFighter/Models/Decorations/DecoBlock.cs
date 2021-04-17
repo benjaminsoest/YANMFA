@@ -21,7 +21,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
 
         public override void Render(Graphics g)
         {
-            g.DrawImage(CurrentTexture, _hitbox);
+            g.DrawImage(CurrentTexture, _hitbox);            
         }
 
         public override void Update()
@@ -36,6 +36,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
 
         public override void Resize(int width, int height)
         {
+
         }
 
         public override void KeyDown(KeyEventArgs keyEventArgs)
