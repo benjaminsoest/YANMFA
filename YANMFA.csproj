@@ -124,9 +124,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Games\Alex\SpiderFighter\Models\Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Assets\Alex\SpiderFighter\Levels\Test1.txt" />
     <Content Include="Assets\Alex\SpiderFighter\Textures\Background.png" />
