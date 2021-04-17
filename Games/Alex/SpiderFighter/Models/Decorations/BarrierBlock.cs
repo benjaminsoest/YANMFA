@@ -51,8 +51,9 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
                 {
                     Round.PlayerOne.Hitbox = new RectangleF(Hitbox.Right, rec.Top, rec.Width, rec.Height);
                 }
-                else
+                else if((rec.Top <= Hitbox.Bottom) && (rec.Top > Hitbox.Top + Hitbox.Height /2))
                 {
+                    Round.PlayerOne.Hitbox = new RectangleF(rec.X, Hitbox.Bottom, rec.Width, rec.Height);
                 }
             }
             else
