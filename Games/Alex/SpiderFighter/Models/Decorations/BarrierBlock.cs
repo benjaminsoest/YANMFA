@@ -29,47 +29,35 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
             MobResistance();
         }
 
-        public override void MouseDown(MouseEventArgs mouseEventArgs)
-        {
-
-        }
-
         public override void Resize(int width, int height)
         {
-        }
-
-        public override void KeyDown(KeyEventArgs keyEventArgs)
-        {
 
         }
-
+      
         public void MobResistance()
         {
-            foreach (var VARIABLE in Round.CurrentLevel.Mobs)
+            RectangleF rec = Round.PlayerOne.Hitbox;
+            if (Hitbox.IntersectsWith(rec))
             {
-                RectangleF rec = VARIABLE.Hitbox;
-                if (_hitbox.IntersectsWith(rec))
+                if ((rec.Bottom >= Hitbox.Top) && (rec.Bottom < Hitbox.Bottom - Hitbox.Height / 2))
                 {
-                    if ((rec.Bottom >= _hitbox.Top) && (rec.Bottom < _hitbox.Bottom - _hitbox.Height/2))
-                    {
-                        rec = new RectangleF(rec.X, _hitbox.Top - rec.Height, rec.Width, rec.Height);
-                    }
-                    else if ((rec.Right >= _hitbox.Left) && (rec.Right < _hitbox.Left + _hitbox.Width/2))
-                    {                   
-                        rec = new RectangleF(_hitbox.Left - rec.Width, rec.Top, rec.Width, rec.Height);
-                    }
-                    else if ((rec.Left <= _hitbox.Right) && (rec.Left > _hitbox.Right - _hitbox.Width/2))
-                    {
-                        rec =  new RectangleF(_hitbox.Right, rec.Top, rec.Width, rec.Height);
-                    }                               
-                    else
-                    {
-                        
-                    }
+                    Round.PlayerOne.Hitbox = new RectangleF(rec.X, Hitbox.Top - rec.Height, rec.Width, rec.Height);
                 }
-                else
+                else if ((rec.Right >= Hitbox.Left) && (rec.Right < Hitbox.Left + Hitbox.Width / 2))
                 {
-                }     
+                    Round.PlayerOne.Hitbox = new RectangleF(Hitbox.Left - rec.Width, rec.Top, rec.Width, rec.Height);
+                }
+                else if ((rec.Left <= Hitbox.Right) && (rec.Left > Hitbox.Right - Hitbox.Width / 2))
+                {
+                    Round.PlayerOne.Hitbox = new RectangleF(Hitbox.Right, rec.Top, rec.Width, rec.Height);
+                }
+                else if((rec.Top <= Hitbox.Bottom) && (rec.Top > Hitbox.Top + Hitbox.Height /2))
+                {
+                    Round.PlayerOne.Hitbox = new RectangleF(rec.X, Hitbox.Bottom, rec.Width, rec.Height);
+                }
+            }
+            else
+            {
             }
         }
     }

@@ -21,7 +21,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
             StartVec = startVec;
             FireSpeed = firestpeed;
             Hitbox = new RectangleF(StartVec.ToPoint(), new SizeF(10, 10));
-            Round.CurrentLevel.Items.Add(this);
+            Round.Bullets.Add(this);
         }
         
         public override RectangleF Hitbox
@@ -44,11 +44,8 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
         public override void Update()
         {
             ProofLocationValidity();
-            if ((_hitbox.X < StaticDisplay.DisplayWidth + StartVec.X) && (_hitbox.X > 0) && (_hitbox.Y > 0) && (_hitbox.Y < StaticDisplay.DisplayHeight))
-            {
-                _hitbox.X += ConnectVec.X;
-                _hitbox.Y += ConnectVec.Y;
-            }
+            _hitbox.X += ConnectVec.X;
+            _hitbox.Y += ConnectVec.Y;
         }
         
         public override void Resize(int width, int height)
@@ -57,21 +54,24 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
 
         void ProofLocationValidity()
         {
-            //foreach (Item VARIABLE in Round.CurrentLevel.Items)
-            //{
-            //    if (VARIABLE is BarrierBlock && VARIABLE.Hitbox.IntersectsWith(_hitbox))
-            //    {
-            //        NeutralizeBullet();
-            //        return;
-            //    }
-            //}
+            if (Hitbox.X <= 0 || Hitbox.X >= 2000 || Hitbox.Y <= 0 || Hitbox.Y >= 800) 
+            {
+                NeutralizeBullet();
+            }
+            foreach (var item in Round.CurrentLevel.Items)
+            {
+                if (item.Hitbox.IntersectsWith(Hitbox) && item is BarrierBlock)
+                {
+                    NeutralizeBullet();
+                }
+            }
         }
 
         void NeutralizeBullet()
         {
             _hitbox.Width = 0;
             _hitbox.Height = 0;
-            DeleteItem();
+            Round.Bullets.Remove(this);
         }
     }
 }

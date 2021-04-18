@@ -13,17 +13,29 @@ namespace YANMFA.Games.Alex.SpiderFighter
 {
     public static class Round
     {
+        public static int StartWidth;
+        public static int StartHeight;
         public static Level CurrentLevel { get; set; }
-        
+        public static List<Bullet> Bullets { get; set; }
         public static List<Level> Levels { get; set; }
 
         public static Human PlayerOne { get; set; }
 
         public static void Update()
         {
-            foreach (var item in CurrentLevel.Items) {item.Update();}
-            foreach (var mob in CurrentLevel.Mobs) {mob.Update();}
             PlayerOne.Update();
+            for (int i = CurrentLevel.Items.Count - 1; i >= 0; i--)
+            {
+                CurrentLevel.Items[i].Update();
+            }
+            for (int i = CurrentLevel.Mobs.Count - 1; i >= 0; i--)
+            {
+                CurrentLevel.Mobs[i].Update();
+            }
+            for (int i = Bullets.Count -1; i >= 0; i--)
+            {
+                Bullets[i].Update();
+            }            
         }
 
         public static void Render(Graphics g)
@@ -31,6 +43,7 @@ namespace YANMFA.Games.Alex.SpiderFighter
             g.TranslateTransform(-PlayerOne.Hitbox.X + StaticDisplay.DisplayWidth / 2, -PlayerOne.Hitbox.Y + StaticDisplay.DisplayHeight / 2);
             foreach (var item in CurrentLevel.Items){item.Render(g);}
             foreach (var mobs in CurrentLevel.Mobs){mobs.Render(g);}
+            foreach (var bullet in Bullets) { bullet.Render(g); }
             PlayerOne.Render(g);
         }
 
@@ -51,13 +64,13 @@ namespace YANMFA.Games.Alex.SpiderFighter
         public static void Resize(int width, int height)
         {
             foreach (var item in CurrentLevel.Items){item.Resize(width,height);}
-            foreach (var mobs in CurrentLevel.Mobs){mobs.Resize(width,height);}
-            
+            foreach (var mobs in CurrentLevel.Mobs){mobs.Resize(width,height);}            
         }
 
         public static void LoadLevels()
         {
             Levels = new List<Level>();
+            Bullets = new List<Bullet>();
 
             DirectoryInfo info = new DirectoryInfo("./Assets/Alex/SpiderFighter/Levels/");
             foreach (FileInfo item in info.GetFiles())
@@ -115,7 +128,7 @@ namespace YANMFA.Games.Alex.SpiderFighter
                             else if (data[6] == "False")
                             {
                                 Textures.ItemBitmaps.TryGetValue(data[5], out Bitmap bitmap);
-                                var decoblock = new BarrierBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])),bitmap);
+                                var decoblock = new DecoBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])),bitmap);
                                 level.Items.Add(decoblock);
                             }
                             break;

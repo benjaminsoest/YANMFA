@@ -11,7 +11,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
     {
         private const int maxJumpHeight = 350;
         private const int maxWalkWidth = 70;
-
+        
         private int _DeltaWalk;
         private int _DeltaJumpHeight;
         private RectangleF _hitbox;
@@ -24,6 +24,8 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
             set { _hitbox = value; }
         }
 
+        public int Gravity { get; set; }
+
         public Weapon SelectedWeapon { get; set; }
 
         public Human()
@@ -32,11 +34,12 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
             Textures.MobBitmaps.TryGetValue("HumanRight", out Bitmap img);
             CurrentTexture = img;
             Healthpoints = 100;
+            Gravity = 12;
         }
         
         public override void Render(Graphics g)
         {           
-            g.DrawImage(CurrentTexture,Hitbox);                    
+            g.DrawImage(CurrentTexture,Hitbox);                
         }
 
         public override void Update()
@@ -46,16 +49,34 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
                 MessageBox.Show("Game Over!: You died");
             }
             else
-            {
-                // Gravity
-                if (_hitbox.Y < StaticDisplay.DisplayHeight - Hitbox.Height)
+            {   
+                if (StaticKeyboard.IsKeyDown(Keys.W) && _currentWalkDir == WalkDirection.None)
                 {
-                    _hitbox.Y += 12 * (float)StaticDisplay.FixedDelta;
+                    _currentWalkDir = WalkDirection.Jump;
+                }            
+                if (StaticKeyboard.IsKeyDown(Keys.A))
+                {
+                    _currentWalkDir = WalkDirection.Left;
+                    _watchDir = WatchDirection.Left;
+                    _DeltaJumpHeight = 0;
+                }
+                if (StaticKeyboard.IsKeyDown(Keys.D))
+                {
+                    _currentWalkDir = WalkDirection.Right;
+                    _watchDir = WatchDirection.Right;
+                    _DeltaJumpHeight = 0;
+                }
+                               
+                // Gravity
+                if (_hitbox.Y < Hitbox.Y + StaticDisplay.DisplayHeight/2)
+                {
+                    _hitbox.Y += Gravity * (float)StaticDisplay.FixedDelta;
                 }
                 
                 // Animation on Jumping
                 if (_currentWalkDir == WalkDirection.Jump)
                 {
+                    Gravity = 12;
                     if (_DeltaJumpHeight < maxJumpHeight)
                     {
                         _DeltaJumpHeight += 25 * (int)StaticDisplay.FixedDelta;
@@ -67,13 +88,11 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
                         _currentWalkDir = WalkDirection.None;
                         return;
                     }
-
                 }
                 
                 // Animation when running to the right
                 if (_currentWalkDir == WalkDirection.Right)
-                {
-                    
+                {                    
                     if (_DeltaWalk < maxWalkWidth)
                     {
                         Textures.MobBitmaps.TryGetValue("HumanRightWalk", out Bitmap bitmap);
@@ -96,8 +115,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
 
                 // Animation when running to the left
                 if (_currentWalkDir == WalkDirection.Left)
-                {
-
+                {                    
                     if (_DeltaWalk < maxWalkWidth)
                     {
                         Textures.MobBitmaps.TryGetValue("HumanLeftWalk", out Bitmap bitmap);
@@ -130,28 +148,15 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
 
         public override void Resize(int width, int height)
         {
+            _hitbox.Width *= width / Round.StartWidth;
+            _hitbox.Height *= height / Round.StartHeight;
+            _hitbox.X *= width / Round.StartWidth;
+            _hitbox.Y *= height / Round.StartHeight;
         }
 
         public override void KeyDown(KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.A)
-            {
-                _currentWalkDir = WalkDirection.Left;
-                _watchDir = WatchDirection.Left;
-                _DeltaJumpHeight = 0;
-            }
-
-            if (e.KeyCode == Keys.D)
-            {
-                _currentWalkDir = WalkDirection.Right;
-                _watchDir = WatchDirection.Right;
-                _DeltaJumpHeight = 0;
-            }
-
-            if (e.KeyCode == Keys.Space && _currentWalkDir == WalkDirection.None)
-            {
-                _currentWalkDir = WalkDirection.Jump;
-            }
+                        
         }
 
         void Shoot(Vector direction, Vector startVec)
