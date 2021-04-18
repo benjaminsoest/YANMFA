@@ -69,6 +69,11 @@
     <Compile Include="Games\Alex\SpiderFighter\Round.cs" />
     <Compile Include="Games\Alex\SpiderFighter\SpiderFighterGame.cs" />
     <Compile Include="Games\Alex\SpiderFighter\Tools\Vector.cs" />
+    <Compile Include="Games\Benjamin\Utils\Game.cs" />
+    <Compile Include="Games\Benjamin\Utils\Style.cs" />
+    <Compile Include="Games\Benjamin\Utils\UiElement.cs" />
+    <Compile Include="Games\Benjamin\Utils\UiTest.cs" />
+    <Compile Include="Games\Benjamin\Utils\Vector2D.cs" />
     <Compile Include="Games\Lars\Snake\SnakeControl.cs" />
     <Compile Include="Core\Display\StaticDisplay.cs">
       <SubType>Form</SubType>
@@ -119,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Games\Alex\SpiderFighter\Models\Interfaces\" />
+    <Folder Include="Games\Benjamin\CurveFever\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Alex\SpiderFighter\Levels\Test1.txt" />

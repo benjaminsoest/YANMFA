@@ -24,6 +24,7 @@ namespace YANMFA.Core
             { // TODO: Add Games here
                 Games.Add(new SnakeControl());
                 Games.Add(new SpiderFighterGame());
+                Games.Add(new Games.Benjamin.Utils.UiTest());
             }
             ChangeGame(null, GameMode.SINGLEPLAYER); // Change game to GameMenu
         }
