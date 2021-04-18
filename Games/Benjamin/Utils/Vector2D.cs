@@ -1,6 +1,6 @@
 using System;
 
-namespace School_utils
+namespace YANMFA.Games.Benjamin.Utils
 {
     public struct Vector2D : IEquatable<Vector2D>, IComparable<Vector2D>, IComparable<double>
     {
