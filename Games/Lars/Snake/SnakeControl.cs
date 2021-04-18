@@ -14,6 +14,7 @@ namespace YANMFA.Games.Lars.Snake
 
         public GameMode GameType => GameMode.SINGLE_AND_MULTIPLAYER;
         Image imgStart, imgLoadingScreen;
+        Bitmap btmEyes;
         Rectangle[,] field;
         SnakePlayer[] player;
         SnakeBerry berryList;
@@ -23,6 +24,8 @@ namespace YANMFA.Games.Lars.Snake
         public SnakeControl()
         {
             imgStart = Image.FromFile("./Assets/Lars/Snake/Logo.png");
+            imgLoadingScreen = Image.FromFile("./Assets/Lars/Snake/LoadingScreen.png");
+            btmEyes = (Bitmap)Image.FromFile("./Assets/Lars/Snake/Eyes.png");
         }
 
         public void CreateField()
@@ -64,8 +67,7 @@ namespace YANMFA.Games.Lars.Snake
         }
 
         public void Start(GameMode mode)
-        {
-            imgLoadingScreen = Image.FromFile("./Assets/Lars/Snake/Snake-LoadingScreen.png");
+        {            
             fieldCountX = 13;
             fieldCountY = 11;
             field = new Rectangle[fieldCountX, fieldCountY];
@@ -81,45 +83,49 @@ namespace YANMFA.Games.Lars.Snake
             StaticKeyboard.AddKeyDownListener(KeyDown);
             stopRequested = false;
             Restart();
+            //System.Threading.Thread.Sleep(2000);
         }
 
         public void IsKeyDown()
         {
-            if (StaticKeyboard.IsKeyDown(Keys.W) && player[0].LastDirection.Y != 1)
+            if (player[0].Direction != new Vector2(0,0))
             {
-                player[0].Direction = new Vector2(0, -1);
-            }
-            else if (StaticKeyboard.IsKeyDown(Keys.S) && player[0].LastDirection.Y != -1)
-            {
-                player[0].Direction = new Vector2(0, 1);
-            }
-            else if (StaticKeyboard.IsKeyDown(Keys.A) && player[0].LastDirection.X != 1)
-            {
-                player[0].Direction = new Vector2(-1, 0);
-            }
-            else if (StaticKeyboard.IsKeyDown(Keys.D) && player[0].LastDirection.X != -1)
-            {
-                player[0].Direction = new Vector2(1, 0);
-            }
-            if (multiplayer)
-            {
-                if (StaticKeyboard.IsKeyDown(Keys.Up) && player[1].LastDirection.Y != 1)
+                if (StaticKeyboard.IsKeyDown(Keys.W) && player[0].LastDirection.Y != 1)
                 {
-                    player[1].Direction = new Vector2(0, -1);
+                    player[0].Direction = new Vector2(0, -1);
                 }
-                else if (StaticKeyboard.IsKeyDown(Keys.Down) && player[1].LastDirection.Y != -1)
+                if (StaticKeyboard.IsKeyDown(Keys.S) && player[0].LastDirection.Y != -1)
                 {
-                    player[1].Direction = new Vector2(0, 1);
+                    player[0].Direction = new Vector2(0, 1);
                 }
-                else if (StaticKeyboard.IsKeyDown(Keys.Left) && player[1].LastDirection.X != 1)
+                if (StaticKeyboard.IsKeyDown(Keys.A) && player[0].LastDirection.X != 1)
                 {
-                    player[1].Direction = new Vector2(-1, 0);
+                    player[0].Direction = new Vector2(-1, 0);
                 }
-                else if (StaticKeyboard.IsKeyDown(Keys.Right) && player[1].LastDirection.X != -1)
+                if (StaticKeyboard.IsKeyDown(Keys.D) && player[0].LastDirection.X != -1)
                 {
-                    player[1].Direction = new Vector2(1, 0);
+                    player[0].Direction = new Vector2(1, 0);
                 }
-            }
+                if (multiplayer)
+                {
+                    if (StaticKeyboard.IsKeyDown(Keys.Up) && player[1].LastDirection.Y != 1)
+                    {
+                        player[1].Direction = new Vector2(0, -1);
+                    }
+                    else if (StaticKeyboard.IsKeyDown(Keys.Down) && player[1].LastDirection.Y != -1)
+                    {
+                        player[1].Direction = new Vector2(0, 1);
+                    }
+                    else if (StaticKeyboard.IsKeyDown(Keys.Left) && player[1].LastDirection.X != 1)
+                    {
+                        player[1].Direction = new Vector2(-1, 0);
+                    }
+                    else if (StaticKeyboard.IsKeyDown(Keys.Right) && player[1].LastDirection.X != -1)
+                    {
+                        player[1].Direction = new Vector2(1, 0);
+                    }
+                }
+            }            
         }
 
         public void KeyDown(object sender, KeyEventArgs e)
@@ -128,7 +134,7 @@ namespace YANMFA.Games.Lars.Snake
             {
                 stopRequested = true;
             }
-            else if (e.KeyCode == Keys.Space && (gameOver || !gameStart))
+            else if (e.KeyCode == Keys.Space && (gameOver || !gameStart || gameStart))
             {
                 if (gameOver)
                 {
@@ -136,7 +142,7 @@ namespace YANMFA.Games.Lars.Snake
                 }
                 else
                 {
-                    gameStart = true;
+                    gameStart = !gameStart;
                 }
             }
         }
@@ -171,8 +177,13 @@ namespace YANMFA.Games.Lars.Snake
                     }
                 }
             }
-            for (int i = 0; i < player.Length; i++)
+            foreach (var item in berryList.BerryPos)
             {
+                g.FillEllipse(brBerry, field[item.X, item.Y]);
+                g.DrawEllipse(penBlack, field[item.X, item.Y]);
+            }
+            for (int i = 0; i < player.Length; i++)
+            {                
                 if (i == 0)
                 {
                     brSnake= new SolidBrush(Color.FromArgb(56, 110, 209));
@@ -192,17 +203,14 @@ namespace YANMFA.Games.Lars.Snake
                 {
                     g.DrawLine(penSnake, new Point(field[0, 0].Width * item[0].X, field[0, 0].Height * item[0].Y), new Point(field[0, 0].Width * item[1].X, field[0, 0].Height * item[1].Y));
                 }
-            }
-            foreach (var item in berryList.BerryPos)
-            {
-                g.FillEllipse(brBerry, field[item.X, item.Y]);
-                g.DrawEllipse(penBlack, field[item.X, item.Y]);
-            }
+                g.DrawImage(player[i].ImgEyes, field[player[i].Body[player[i].Body.Count - 1].X, player[i].Body[player[i].Body.Count - 1].Y]);
+            }                       
         }
 
         public void Update()
         {
-            if (gameStart)
+            //Console.WriteLine(StaticDisplay.FPSCount);
+            if (gameStart && !gameOver)
             {
                 IsKeyDown();
                 tickCounter++;
@@ -211,7 +219,7 @@ namespace YANMFA.Games.Lars.Snake
                     tickCounter = 0;
                     for (int i = 0; i < player.Length; i++)
                     {
-                        if (!player[i].MoveSnake(berryList.BerryPos, MergeSnakes()))
+                        if (!player[i].MoveSnake(berryList.BerryPos, MergeSnakes(), btmEyes))
                         {
                             gameOver = true;
                             MessageBox.Show(player[i].Name + " lost. Press Space to restart");
@@ -276,7 +284,7 @@ namespace YANMFA.Games.Lars.Snake
             if (tickCounter == 4)
             {
                 tickCounter = 0;
-                imgLoadingScreen.RotateFlip(RotateFlipType.Rotate90FlipNone);                
+                imgLoadingScreen.RotateFlip(RotateFlipType.Rotate90FlipNone);
             }
             g.DrawImage(imgLoadingScreen, loadingSymbole);
         }

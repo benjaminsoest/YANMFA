@@ -8,12 +8,14 @@ namespace YANMFA.Games.Lars.Snake
     {
         List<Point> body, berry;
         List<Point[]> removedParts;
+        Image imgEyes;
         Vector2 direction, lastDirection;
         int fieldLength, fieldHeight;
         string name;
 
         public SnakePlayer(Point startPoint, Vector2 startDirection, int fieldX, int fieldY, string n)
         {
+            imgEyes = Image.FromFile("./Assets/Lars/Snake/Eyes.png");
             body = new List<Point>();
             berry = new List<Point>();
             removedParts = new List<Point[]>();
@@ -27,12 +29,13 @@ namespace YANMFA.Games.Lars.Snake
 
         public List<Point> Body { get => body; set => body = value; }
         public List<Point> Berry { get => berry; }
+        public Image ImgEyes { get => imgEyes; set => imgEyes = value; }
         public Vector2 Direction { get => direction; set => direction = value; }
         public Vector2 LastDirection { get => lastDirection; set => lastDirection = value; }
         public List<Point[]> RemovedParts { get => removedParts; set => removedParts = value; }
         public string Name { get => name; }
 
-        public bool MoveSnake(List<Point> p, List<Point>[] combinedBodys)
+        public bool MoveSnake(List<Point> p, List<Point>[] combinedBodys, Bitmap btm)
         {
             Point newHead = body[body.Count - 1];
             newHead.X += (int)direction.X;
@@ -50,6 +53,7 @@ namespace YANMFA.Games.Lars.Snake
                 }
                 body.Add(newHead);
                 RemovePart(newPart);
+                FlipEyes(btm);
                 lastDirection = direction;
                 return true;
             }
@@ -63,7 +67,7 @@ namespace YANMFA.Games.Lars.Snake
         {
             foreach (var item in snakeBodys)
             {
-                if (lastItem)
+                if (lastItem && item.Count > 1)
                 {
                     if (item.Contains(p) && p != item[0])
                     {
@@ -124,6 +128,38 @@ namespace YANMFA.Games.Lars.Snake
                 }
             }
             return -1;
+        }
+
+        public void FlipEyes(Bitmap btm)
+        {
+            if (direction.Y == 1)
+            {
+                imgEyes = btm;
+            }
+            else if(direction.Y == -1)
+            {
+                imgEyes = RotateImage(btm, 180);
+            }
+            else if (direction.X == 1)
+            {
+                imgEyes = RotateImage(btm, 270);
+            }
+            else if (direction.X == -1)
+            {
+                imgEyes = RotateImage(btm, 90);
+            }                      
+        }
+        public Bitmap RotateImage(Bitmap b, int angle)
+        {            
+            Bitmap returnBitmap = new Bitmap(b.Width, b.Height);
+            using (Graphics g = Graphics.FromImage(returnBitmap))
+            {
+                g.TranslateTransform((float)b.Width / 2, (float)b.Height / 2);
+                g.RotateTransform(angle);
+                g.TranslateTransform(-(float)b.Width / 2, -(float)b.Height / 2);
+                g.DrawImage(b, new Point(0, 0));
+            }
+            return returnBitmap;
         }
     }
 }
