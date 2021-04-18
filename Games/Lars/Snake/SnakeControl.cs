@@ -11,21 +11,18 @@ namespace YANMFA.Games.Lars.Snake
     {
         public string GameName => "Snake";
         public string GameDescription => "Play as a snake and try to gather as many fruits as possible";
+
         public GameMode GameType => GameMode.SINGLE_AND_MULTIPLAYER;
-        Image imgStart;
+        Image imgStart, imgLoadingScreen;
         Rectangle[,] field;
         SnakePlayer[] player;
         SnakeBerry berryList;
         int fieldCountX, fieldCountY, tickCounter, berrySpawnCounter;
-        bool stopRequested, gameOver, multiplayer;
+        bool stopRequested, gameOver, multiplayer, gameStart;
 
         public SnakeControl()
         {
             imgStart = Image.FromFile("./Assets/Lars/Snake/Logo.png");
-            fieldCountX = 13;
-            fieldCountY = 11;
-            field = new Rectangle[fieldCountX, fieldCountY];
-            berrySpawnCounter = 3;
         }
 
         public void CreateField()
@@ -60,6 +57,7 @@ namespace YANMFA.Games.Lars.Snake
         {
             return imgStart;
         }
+
         public bool IsStopRequested()
         {
             return stopRequested;
@@ -67,6 +65,10 @@ namespace YANMFA.Games.Lars.Snake
 
         public void Start(GameMode mode)
         {
+            imgLoadingScreen = Image.FromFile("./Assets/Lars/Snake/Snake-LoadingScreen.png");
+            fieldCountX = 13;
+            fieldCountY = 11;
+            field = new Rectangle[fieldCountX, fieldCountY];
             if (mode == GameMode.SINGLEPLAYER)
             {
                 multiplayer = false;
@@ -78,7 +80,7 @@ namespace YANMFA.Games.Lars.Snake
             StaticDisplay.AddResizeListener(Resize);
             StaticKeyboard.AddKeyDownListener(KeyDown);
             stopRequested = false;
-            Restart();            
+            Restart();
         }
 
         public void IsKeyDown()
@@ -99,7 +101,7 @@ namespace YANMFA.Games.Lars.Snake
             {
                 player[0].Direction = new Vector2(1, 0);
             }
-            else if (multiplayer)
+            if (multiplayer)
             {
                 if (StaticKeyboard.IsKeyDown(Keys.Up) && player[1].LastDirection.Y != 1)
                 {
@@ -126,9 +128,16 @@ namespace YANMFA.Games.Lars.Snake
             {
                 stopRequested = true;
             }
-            else if (e.KeyCode == Keys.Space && gameOver)
+            else if (e.KeyCode == Keys.Space && (gameOver || !gameStart))
             {
-                Restart();
+                if (gameOver)
+                {
+                    Restart();
+                }
+                else
+                {
+                    gameStart = true;
+                }
             }
         }
 
@@ -193,24 +202,27 @@ namespace YANMFA.Games.Lars.Snake
 
         public void Update()
         {
-            IsKeyDown();
-            tickCounter++;
-            if (tickCounter > 17 && !gameOver)
-            {                
-                tickCounter = 0;
-                for(int i = 0; i < player.Length; i++)
+            if (gameStart)
+            {
+                IsKeyDown();
+                tickCounter++;
+                if (tickCounter > 17 && !gameOver)
                 {
-                    if (!player[i].MoveSnake(berryList.BerryPos, MergeSnakes()))
+                    tickCounter = 0;
+                    for (int i = 0; i < player.Length; i++)
                     {
-                        gameOver = true;
-                        MessageBox.Show(player[i].Name + " lost. Press Space to restart");
+                        if (!player[i].MoveSnake(berryList.BerryPos, MergeSnakes()))
+                        {
+                            gameOver = true;
+                            MessageBox.Show(player[i].Name + " lost. Press Space to restart");
+                        }
+                    }
+                    if (SpawnBerryReady())
+                    {
+                        berryList.SpawnBerry(player, MergeSnakes());
                     }
                 }
-                if (SpawnBerryReady())
-                {
-                    berryList.SpawnBerry(player, MergeSnakes());
-                }
-            }
+            }           
         }
 
         public List<Point>[] MergeSnakes()
@@ -251,16 +263,28 @@ namespace YANMFA.Games.Lars.Snake
             CreatePlayer();
             CreateField();
             tickCounter = 0;
+            berrySpawnCounter = 3;
             berryList = new SnakeBerry(fieldCountX, fieldCountY);
             berryList.SpawnBerry(player,MergeSnakes());
             gameOver = false;
+            gameStart = false;
         }
 
         public void RenderSplash(Graphics g)
         {
+            tickCounter++;
+            if (tickCounter == 4)
+            {
+                tickCounter = 0;
+                imgLoadingScreen.RotateFlip(RotateFlipType.Rotate90FlipNone);                
+            }
+            g.DrawImage(imgLoadingScreen, loadingSymbole);
         }
+
+        Rectangle loadingSymbole = new Rectangle(StaticDisplay.DisplayWidth / 2 - 50, StaticDisplay.DisplayHeight / 2 - 50, 100, 100);
+
         public void UpdateSplash()
-        {
+        {            
         }
     }
 }

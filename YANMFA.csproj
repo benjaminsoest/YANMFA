@@ -157,6 +157,7 @@
     <Content Include="Assets\Alex\SpiderFighter\Textures\woodplank1.png" />
     <Content Include="Assets\Alex\SpiderFighter\Textures\woodwall.png" />
     <Content Include="Assets\Lars\Snake\Logo.png" />
+    <Content Include="Assets\Lars\Snake\Snake-LoadingScreen.png" />
     <Content Include="Assets\Paolo\MyGameMenu\multiplayer.png" />
     <Content Include="Assets\Paolo\MyGameMenu\singleplayer.png" />
     <Content Include="Assets\Paolo\MyGameMenu\yanmfa-logo.png" />

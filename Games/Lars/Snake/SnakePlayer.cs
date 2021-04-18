@@ -37,7 +37,6 @@ namespace YANMFA.Games.Lars.Snake
             Point newHead = body[body.Count - 1];
             newHead.X += (int)direction.X;
             newHead.Y += (int)direction.Y;
-
             if (newHead.X >= 0 && newHead.X < fieldLength && newHead.Y >= 0 && newHead.Y < fieldHeight && !ControlIntersection(newHead, combinedBodys, true))
             {
                 bool newPart = false;
