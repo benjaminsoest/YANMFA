@@ -41,6 +41,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -69,6 +73,11 @@
     <Compile Include="Games\Alex\SpiderFighter\Round.cs" />
     <Compile Include="Games\Alex\SpiderFighter\SpiderFighterGame.cs" />
     <Compile Include="Games\Alex\SpiderFighter\Tools\Vector.cs" />
+    <Compile Include="Games\Lars\Snake\SnakeBerry.cs" />
+    <Compile Include="Games\Benjamin\Utils\Game.cs" />
+    <Compile Include="Games\Benjamin\Utils\Style.cs" />
+    <Compile Include="Games\Benjamin\Utils\UiElement.cs" />
+    <Compile Include="Games\Benjamin\Utils\Vector2D.cs" />
     <Compile Include="Games\Lars\Snake\SnakeControl.cs" />
     <Compile Include="Core\Display\StaticDisplay.cs">
       <SubType>Form</SubType>
@@ -80,6 +89,7 @@
     <Compile Include="Core\Input\StaticKeyboard.cs" />
     <Compile Include="Core\Input\StaticMouse.cs" />
     <Compile Include="Core\StaticEngine.cs" />
+    <Compile Include="Games\Lars\Snake\SnakePlayer.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\GameMenu.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\GuiComponent.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\Layout\GridLayout.cs" />
@@ -104,6 +114,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -117,7 +128,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Games\Alex\SpiderFighter\Models\Interfaces\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Alex\SpiderFighter\Levels\lvl1.txt" />
     <Content Include="Assets\Alex\SpiderFighter\Levels\Test1.txt" />
@@ -149,7 +162,9 @@
     <Content Include="Assets\Alex\SpiderFighter\Textures\woodcorner.png" />
     <Content Include="Assets\Alex\SpiderFighter\Textures\woodplank1.png" />
     <Content Include="Assets\Alex\SpiderFighter\Textures\woodwall.png" />
+    <Content Include="Assets\Lars\Snake\Eyes.png" />
     <Content Include="Assets\Lars\Snake\Logo.png" />
+    <Content Include="Assets\Lars\Snake\LoadingScreen.png" />
     <Content Include="Assets\Paolo\MyGameMenu\multiplayer.png" />
     <Content Include="Assets\Paolo\MyGameMenu\singleplayer.png" />
     <Content Include="Assets\Paolo\MyGameMenu\yanmfa-logo.png" />
