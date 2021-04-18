@@ -83,9 +83,12 @@ namespace YANMFA.Core
         private void Display_MouseMove(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseMoveListener(sender, e);
         private void Display_MouseUp(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseUpListener(sender, e);
         private void Display_MouseWheel(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseWheelListener(sender, e);
+        private void Display_MouseClick(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseClickListener(sender, e);
+        private void Display_MouseDoubleClick(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseDoubleClickListener(sender, e);
 
         private void Display_KeyDown(object sender, KeyEventArgs e) => StaticKeyboard.InvokeKeyDownListener(sender, e);
         private void Display_KeyUp(object sender, KeyEventArgs e) => StaticKeyboard.InvokeKeyUpListener(sender, e);
+        private void Display_KeyPress(object sender, KeyPressEventArgs e) => StaticKeyboard.InvokeKeyPressListener(sender, e);
 
         #region GameEngine region
         [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
