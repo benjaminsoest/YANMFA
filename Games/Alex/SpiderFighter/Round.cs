@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Dynamic;
 using System.IO;
 using System.Windows.Forms;
@@ -13,8 +14,10 @@ namespace YANMFA.Games.Alex.SpiderFighter
 {
     public static class Round
     {
-        public static int StartWidth;
-        public static int StartHeight;
+        public static float QuotientWidth = 1;
+        public static float QuotientHeight = 1;
+        public static float StartWidth;
+        public static float StartHeight;
         public static Level CurrentLevel { get; set; }
         public static List<Bullet> Bullets { get; set; }
         public static List<Level> Levels { get; set; }
@@ -40,10 +43,17 @@ namespace YANMFA.Games.Alex.SpiderFighter
 
         public static void Render(Graphics g)
         {
-            g.TranslateTransform(-PlayerOne.Hitbox.X + StaticDisplay.DisplayWidth / 2, -PlayerOne.Hitbox.Y + StaticDisplay.DisplayHeight / 2);
-            foreach (var item in CurrentLevel.Items){item.Render(g);}
-            foreach (var mobs in CurrentLevel.Mobs){mobs.Render(g);}
+                                       
+            Matrix scaleMatrix = new Matrix();
+            scaleMatrix.Scale(QuotientWidth, QuotientHeight, MatrixOrder.Append); 
+            
+            g.Transform = scaleMatrix;
+            g.TranslateTransform((-PlayerOne.Hitbox.X) + ((StaticDisplay.DisplayWidth / 2 )), (-PlayerOne.Hitbox.Y * QuotientHeight) + (StaticDisplay.DisplayHeight / 2));  
+
+            foreach (var item in CurrentLevel.Items) { item.Render(g); }
+            foreach (var mobs in CurrentLevel.Mobs) { mobs.Render(g); }
             foreach (var bullet in Bullets) { bullet.Render(g); }
+
             PlayerOne.Render(g);
         }
 
@@ -63,8 +73,8 @@ namespace YANMFA.Games.Alex.SpiderFighter
            
         public static void Resize(int width, int height)
         {
-            foreach (var item in CurrentLevel.Items){item.Resize(width,height);}
-            foreach (var mobs in CurrentLevel.Mobs){mobs.Resize(width,height);}            
+            QuotientHeight = StaticDisplay.DisplayHeight /StartHeight ;
+            QuotientWidth = StaticDisplay.DisplayWidth / StartWidth;
         }
 
         public static void LoadLevels()
