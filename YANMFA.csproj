@@ -72,7 +72,6 @@
     <Compile Include="Games\Benjamin\Utils\Game.cs" />
     <Compile Include="Games\Benjamin\Utils\Style.cs" />
     <Compile Include="Games\Benjamin\Utils\UiElement.cs" />
-    <Compile Include="Games\Benjamin\Utils\UiTest.cs" />
     <Compile Include="Games\Benjamin\Utils\Vector2D.cs" />
     <Compile Include="Games\Lars\Snake\SnakeControl.cs" />
     <Compile Include="Core\Display\StaticDisplay.cs">

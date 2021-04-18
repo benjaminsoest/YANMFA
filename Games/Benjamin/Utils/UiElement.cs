@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 using YANMFA.Core;
 
 namespace YANMFA.Games.Benjamin.Utils
@@ -12,7 +9,7 @@ namespace YANMFA.Games.Benjamin.Utils
 	{
 		public Vector2D Pos;
 		public Vector2D Size;
-		public Action ClickAction;
+		public Action<MouseButtons> ClickAction;
 		public Func<string> Content;
 		public bool Enabled = true;
 
@@ -21,7 +18,7 @@ namespace YANMFA.Games.Benjamin.Utils
 		public int W => (int)(StaticDisplay.DisplayWidth * Size.X / 100);
 		public int H => (int)(StaticDisplay.DisplayHeight * Size.Y / 100);
 
-		public UiElement(Vector2D pos, Vector2D size, Action clickAction, Func<string> content)
+		public UiElement(Vector2D pos, Vector2D size, Action<MouseButtons> clickAction, Func<string> content)
 		{
 			Pos = pos;
 			Size = size;
