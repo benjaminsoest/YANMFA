@@ -51,7 +51,10 @@ namespace YANMFA.Core
             this.Text = "YANMFA!";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Display_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Display_KeyDown);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Display_KeyPress);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Display_KeyUp);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Display_MouseClick);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Display_MouseDoubleClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Display_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Display_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Display_MouseUp);

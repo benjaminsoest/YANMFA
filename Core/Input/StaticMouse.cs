@@ -10,9 +10,12 @@ namespace YANMFA.Core
         private static readonly List<MouseEventHandler> MOUSE_DOWN_LISTENER = new List<MouseEventHandler>();
         private static readonly List<MouseEventHandler> MOUSE_UP_LISTENER = new List<MouseEventHandler>();
         private static readonly List<MouseEventHandler> MOUSE_MOVE_LISTENER = new List<MouseEventHandler>();
+        private static readonly List<MouseEventHandler> MOUSE_CLICK_LISTENER = new List<MouseEventHandler>();
+        private static readonly List<MouseEventHandler> MOUSE_DOUBLE_CLICK_LISTENER = new List<MouseEventHandler>();
         private static readonly List<MouseEventHandler> MOUSE_WHEEL_LISTENER = new List<MouseEventHandler>();
 
         private static readonly HashSet<MouseButtons> BUTTON_STATE_LIST = new HashSet<MouseButtons>();
+        public static HashSet<MouseButtons> PRESSED_MOUSE_BUTTONS = new HashSet<MouseButtons>();
 
         /**
          * Display mouse position and delta wheel.
@@ -59,9 +62,24 @@ namespace YANMFA.Core
             for (int i = MOUSE_WHEEL_LISTENER.Count - 1; i >= 0; i--)
                 MOUSE_WHEEL_LISTENER[i]?.Invoke(sender, e);
         }
+
+        [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
+        internal static void InvokeMouseClickListener(object sender, MouseEventArgs e)
+        {
+            for (int i = MOUSE_CLICK_LISTENER.Count - 1; i >= 0; i--)
+                MOUSE_CLICK_LISTENER[i]?.Invoke(sender, e);
+        }
+
+        [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
+        internal static void InvokeMouseDoubleClickListener(object sender, MouseEventArgs e)
+        {
+            for (int i = MOUSE_DOUBLE_CLICK_LISTENER.Count - 1; i >= 0; i--)
+                MOUSE_DOUBLE_CLICK_LISTENER[i]?.Invoke(sender, e);
+        }
         #endregion
 
         public static bool IsButtonDown(MouseButtons button) => BUTTON_STATE_LIST.Contains(button);
+        public static bool WasButtonPressed(MouseButtons button) => PRESSED_MOUSE_BUTTONS.Contains(button);
 
         public static void AddMouseDownListener(MouseEventHandler handler)
         {
@@ -87,6 +105,18 @@ namespace YANMFA.Core
                 MOUSE_WHEEL_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
         }
 
+        public static void AddMouseClickListener(MouseEventHandler handler)
+        {
+            if (!MOUSE_CLICK_LISTENER.Contains(handler))
+                MOUSE_CLICK_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        }
+
+        public static void AddMouseDoubleClickListener(MouseEventHandler handler)
+        {
+            if (!MOUSE_DOUBLE_CLICK_LISTENER.Contains(handler))
+                MOUSE_DOUBLE_CLICK_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        }
+
         public static bool RemoveMouseDownListener(MouseEventHandler handler) => MOUSE_DOWN_LISTENER.Remove(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
 
         public static bool RemoveMouseUpListener(MouseEventHandler handler) => MOUSE_UP_LISTENER.Remove(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
@@ -94,6 +124,10 @@ namespace YANMFA.Core
         public static bool RemoveMouseMoveListener(MouseEventHandler handler) => MOUSE_MOVE_LISTENER.Remove(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
 
         public static bool RemoveMouseWheelListener(MouseEventHandler handler) => MOUSE_WHEEL_LISTENER.Remove(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+
+        public static bool RemoveMouseClickListener(MouseEventHandler handler) => MOUSE_CLICK_LISTENER.Remove(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+
+        public static bool RemoveMouseDoubleClickListener(MouseEventHandler handler) => MOUSE_DOUBLE_CLICK_LISTENER.Remove(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
 
     }
 }
