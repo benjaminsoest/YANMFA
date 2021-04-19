@@ -15,6 +15,7 @@ namespace YANMFA.Core
         private static readonly List<MouseEventHandler> MOUSE_WHEEL_LISTENER = new List<MouseEventHandler>();
 
         private static readonly HashSet<MouseButtons> BUTTON_STATE_LIST = new HashSet<MouseButtons>();
+        public static HashSet<MouseButtons> PRESSED_MOUSE_BUTTONS = new HashSet<MouseButtons>();
 
         /**
          * Display mouse position and delta wheel.
@@ -78,6 +79,7 @@ namespace YANMFA.Core
         #endregion
 
         public static bool IsButtonDown(MouseButtons button) => BUTTON_STATE_LIST.Contains(button);
+        public static bool WasButtonPressed(MouseButtons button) => PRESSED_MOUSE_BUTTONS.Contains(button);
 
         public static void AddMouseDownListener(MouseEventHandler handler)
         {

@@ -12,6 +12,7 @@ namespace YANMFA.Core
         private static readonly List<KeyPressEventHandler> KEY_PRESS_LISTENER = new List<KeyPressEventHandler>();
 
         private static readonly HashSet<Keys> KEY_STATE_LIST = new HashSet<Keys>();
+        public static HashSet<char> PRESSED_KEYS = new HashSet<char>();
 
         private StaticKeyboard() { }
 
@@ -41,6 +42,7 @@ namespace YANMFA.Core
         #endregion
 
         public static bool IsKeyDown(Keys key) => KEY_STATE_LIST.Contains(key);
+        public static bool WasKeyPressed(char keyChar) => PRESSED_KEYS.Contains(keyChar);
 
         public static void AddKeyDownListener(KeyEventHandler handler)
         {

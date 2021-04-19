@@ -8,7 +8,8 @@ namespace YANMFA.Core
 {
     public partial class StaticDisplay : Form
     {
-
+        private static HashSet<char> PRESSED_KEYS = new HashSet<char>();
+        private static HashSet<MouseButtons> PRESSED_MOUSE_BUTTONS = new HashSet<MouseButtons>();
         private static readonly List<EventHandler> RESIZE_LISTENER = new List<EventHandler>();
         private static readonly Stopwatch Stopwatch = new Stopwatch();
 
@@ -60,8 +61,14 @@ namespace YANMFA.Core
             StaticDisplay.Begin();
             {
                 if (StaticEngine.IsGameRunning)
+				{
+                    (PRESSED_KEYS, StaticKeyboard.PRESSED_KEYS) = (StaticKeyboard.PRESSED_KEYS, PRESSED_KEYS);
+                    PRESSED_KEYS.Clear();
+                    (PRESSED_MOUSE_BUTTONS, StaticMouse.PRESSED_MOUSE_BUTTONS) = (StaticMouse.PRESSED_MOUSE_BUTTONS, PRESSED_MOUSE_BUTTONS);
+                    PRESSED_MOUSE_BUTTONS.Clear();
                     StaticEngine.CurrentGame.Update();
-                else // Update Splash-Screen
+				}
+				else // Update Splash-Screen
                     StaticEngine.CurrentGame.UpdateSplash();
                 Refresh();
             }
@@ -83,15 +90,24 @@ namespace YANMFA.Core
         private void Display_MouseMove(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseMoveListener(sender, e);
         private void Display_MouseUp(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseUpListener(sender, e);
         private void Display_MouseWheel(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseWheelListener(sender, e);
-        private void Display_MouseClick(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseClickListener(sender, e);
-        private void Display_MouseDoubleClick(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseDoubleClickListener(sender, e);
+		private void Display_MouseClick(object sender, MouseEventArgs e)
+		{
+            PRESSED_MOUSE_BUTTONS.Add(e.Button);
+			StaticMouse.InvokeMouseClickListener(sender, e);
+		}
+
+		private void Display_MouseDoubleClick(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseDoubleClickListener(sender, e);
 
         private void Display_KeyDown(object sender, KeyEventArgs e) => StaticKeyboard.InvokeKeyDownListener(sender, e);
         private void Display_KeyUp(object sender, KeyEventArgs e) => StaticKeyboard.InvokeKeyUpListener(sender, e);
-        private void Display_KeyPress(object sender, KeyPressEventArgs e) => StaticKeyboard.InvokeKeyPressListener(sender, e);
+		private void Display_KeyPress(object sender, KeyPressEventArgs e)
+		{
+            PRESSED_KEYS.Add(e.KeyChar);
+			StaticKeyboard.InvokeKeyPressListener(sender, e);
+		}
 
-        #region GameEngine region
-        [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
+		#region GameEngine region
+		[Obsolete("This method is reserved for the GameEngine. Don't use it!")]
         static void InvokeResizeListener(Size size, object sender, EventArgs e)
         {
             DisplayWidth = size.Width;
