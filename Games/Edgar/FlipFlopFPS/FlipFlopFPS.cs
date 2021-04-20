@@ -17,7 +17,9 @@ namespace YANMFA.Games.Edgar.FlipFlopFPS
 
 		public string GameDescription => "Survive and fight against enemies in an ever switching manner!";
 
-		public static Image titleImage = Image.FromFile("./Assets/Edgar/FlipFlopFPS/test image.png");
+        GameMode IGameInstance.GameType => GameMode.SINGLEPLAYER;
+
+        public static Image titleImage = Image.FromFile("./Assets/Edgar/FlipFlopFPS/test image.png");
 		public Image GetTitleImage()
 		{
 			return titleImage;
@@ -187,25 +189,6 @@ namespace YANMFA.Games.Edgar.FlipFlopFPS
 			
 		}
 
-		public void Start()
-		{
-			Auto._globalStepFactor = (double)Config.gameTickBase / Config.gameTicksPS;
-
-			Auto.objects = new ObjBox[Config.maxObjs];
-
-			Auto.player1 = new Point(0, 0);
-			for (int i = 0; i < Auto.objects.Length; i++)
-			{
-				Auto.objects[i] = new ObjBox(Config.rand.Next(-500, 500), Config.rand.Next(-500, 500));
-			}
-
-
-			StaticKeyboard.AddKeyUpListener(Events.KeyUp);
-			StaticKeyboard.AddKeyDownListener(Events.KeyDown);
-			StaticMouse.AddMouseDownListener(Events.MouseClick);
-			StaticMouse.AddMouseWheelListener(Events.MouseWheel);
-		}
-
 		public void Stop()
 		{
 			StaticKeyboard.RemoveKeyUpListener(Events.KeyUp);
@@ -240,7 +223,24 @@ namespace YANMFA.Games.Edgar.FlipFlopFPS
 			
 		}
 
-		
-	}
+        void IGameInstance.Start(GameMode mode)
+        {
+			Auto._globalStepFactor = (double)Config.gameTickBase / Config.gameTicksPS;
+
+			Auto.objects = new ObjBox[Config.maxObjs];
+
+			Auto.player1 = new Point(0, 0);
+			for (int i = 0; i < Auto.objects.Length; i++)
+			{
+				Auto.objects[i] = new ObjBox(Config.rand.Next(-500, 500), Config.rand.Next(-500, 500));
+			}
+
+
+			StaticKeyboard.AddKeyUpListener(Events.KeyUp);
+			StaticKeyboard.AddKeyDownListener(Events.KeyDown);
+			StaticMouse.AddMouseDownListener(Events.MouseClick);
+			StaticMouse.AddMouseWheelListener(Events.MouseWheel);
+		}
+    }
 	
 }
