@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Games\Edgar\FlipFlopFPS\Events.cs" />
+    <Compile Include="Games\Edgar\FlipFlopFPS\FlipFlopFPS.cs" />
+    <Compile Include="Games\Edgar\FlipFlopFPS\WorldOBJ.cs" />
     <Compile Include="Games\Lars\Snake\SnakeControl.cs" />
     <Compile Include="Core\Display\StaticDisplay.cs">
       <SubType>Form</SubType>
@@ -98,6 +101,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Assets\Edgar\FlipFlopFPS\test image.png" />
     <Content Include="Assets\Lars\Snake\Logo.png" />
     <Content Include="Assets\Paolo\MyGameMenu\yanmfa-logo.png" />
   </ItemGroup>

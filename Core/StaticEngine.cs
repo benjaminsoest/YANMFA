@@ -1,5 +1,6 @@
 ﻿using YANMFA.Games.Paolo.MyGameMenu;
 using YANMFA.Games.Lars.Snake;
+using YANMFA.Games.Edgar.FlipFlopFPS;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -22,6 +23,7 @@ namespace YANMFA.Core
             Games.Add(new GameMenu()); // Note: This has to be added as first element, since ChangeGame(null) runs the first element
             { // TODO: Add Games here
                 Games.Add(new SnakeControl());
+                Games.Add(new FlipFlopFPS());
             }
             ChangeGame(null); // Change game to GameMenu
         }
