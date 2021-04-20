@@ -49,10 +49,10 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
             {
                 var levels = Round.Levels.Where(l => l.Index.Item1 == Round.CurrentLevel.Index.Item1 - 1 && l.Index.Item2 == Round.CurrentLevel.Index.Item2).ToList();
                 Round.CurrentLevel = levels[0];
-                _hitbox.X = 10;
+                _hitbox.X = 1900;
                 _hitbox.Y = 100;
             }
-            if (Hitbox.X >= 1499)
+            if (Hitbox.X >= 1999)
             {
                 var levels = Round.Levels.Where(l => l.Index.Item1 == Round.CurrentLevel.Index.Item1 + 1 && l.Index.Item2 == Round.CurrentLevel.Index.Item2).ToList();
                 Round.CurrentLevel = levels[0];
@@ -85,7 +85,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
                 // Gravity
                 if (_hitbox.Y < Hitbox.Y + StaticDisplay.DisplayHeight/2)
                 {
-                    _hitbox.Y += Gravity * (float)StaticDisplay.FixedDelta;
+                    _hitbox.Y += Gravity;
                 }
                 
                 // Animation on Jumping
@@ -94,8 +94,8 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
                     Gravity = 12;
                     if (_DeltaJumpHeight < maxJumpHeight)
                     {
-                        _DeltaJumpHeight += 25 * (int)StaticDisplay.FixedDelta;
-                        _hitbox.Y -= 25 * (float)StaticDisplay.FixedDelta;
+                        _DeltaJumpHeight += 25;
+                        _hitbox.Y -= 25;
                     }
                     else if (_hitbox.Bottom >= StaticDisplay.DisplayHeight - 70 || IsCollision())
                     {
@@ -114,8 +114,8 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
                         {
                             CurrentTexture = bitmap;
                         }
-                        _DeltaWalk += 7 * (int)StaticDisplay.FixedDelta;
-                        _hitbox.X += 7 * (int)StaticDisplay.FixedDelta;
+                        _DeltaWalk += 7;
+                        _hitbox.X += 7;
                     }
                     else
                     {
@@ -137,8 +137,8 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
                         {
                             CurrentTexture = bitmap;
                         }
-                        _DeltaWalk += 7 * (int)StaticDisplay.FixedDelta;
-                        _hitbox.X -= 7 * (int)StaticDisplay.FixedDelta;
+                        _DeltaWalk += 7;
+                        _hitbox.X -= 7;
                     }
                     else
                     {

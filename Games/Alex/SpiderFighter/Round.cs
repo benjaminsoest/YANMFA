@@ -43,18 +43,20 @@ namespace YANMFA.Games.Alex.SpiderFighter
 
         public static void Render(Graphics g)
         {
-                                       
+                           
             Matrix scaleMatrix = new Matrix();
             scaleMatrix.Scale(QuotientWidth, QuotientHeight, MatrixOrder.Append); 
             
             g.Transform = scaleMatrix;
-            g.TranslateTransform((-PlayerOne.Hitbox.X) + ((StaticDisplay.DisplayWidth / 2 )), (-PlayerOne.Hitbox.Y * QuotientHeight) + (StaticDisplay.DisplayHeight / 2));  
-
+            g.TranslateTransform((-PlayerOne.Hitbox.X) + ((StaticDisplay.DisplayWidth / 2 ) + 10), (-PlayerOne.Hitbox.Y * QuotientHeight) + (StaticDisplay.DisplayHeight / 2));  
+                        
             foreach (var item in CurrentLevel.Items) { item.Render(g); }
             foreach (var mobs in CurrentLevel.Mobs) { mobs.Render(g); }
             foreach (var bullet in Bullets) { bullet.Render(g); }
 
             PlayerOne.Render(g);
+            g.DrawString(Round.PlayerOne.Healthpoints.ToString(), new Font("Times New Roman", 12.0f), Brushes.Gray, PlayerOne.Hitbox.X - StaticDisplay.DisplayWidth / 2, PlayerOne.Hitbox.Y + StaticDisplay.DisplayHeight / 2 - 80);
+            g.FillRectangle(Brushes.LightGreen, new RectangleF(PlayerOne.Hitbox.X - StaticDisplay.DisplayWidth/2 ,PlayerOne.Hitbox.Y + StaticDisplay.DisplayHeight/2 -50, 300 / 100 * PlayerOne.Healthpoints, 20)); 
         }
 
         public static void MouseDown(MouseEventArgs e)
