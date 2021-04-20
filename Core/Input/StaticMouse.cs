@@ -6,7 +6,8 @@ namespace YANMFA.Core
     public class StaticMouse
     {
 
-        private static readonly HashSet<MouseButtons> BUTTON_STATE_LIST = new HashSet<MouseButtons>();
+        private static readonly HashSet<MouseButtons> TEMP_BUTTON_STATE_LIST = new HashSet<MouseButtons>();
+        private static readonly HashSet<MouseButtons> CURR_BUTTON_STATE_LIST = new HashSet<MouseButtons>();
 
         /**
          * Display mouse position and delta wheel.
@@ -18,16 +19,26 @@ namespace YANMFA.Core
         private StaticMouse() { }
 
         #region GameEngine region
-        internal static void ResetDelta() => DWheel = 0;
+        internal static void ResetCache()
+        {
+            TEMP_BUTTON_STATE_LIST.Clear();
+            DWheel = 0;
+        }
 
-        internal static void InvokeMouseDownListener(MouseEventArgs e) => BUTTON_STATE_LIST.Add(e.Button);
-        internal static void InvokeMouseUpListener(MouseEventArgs e) => BUTTON_STATE_LIST.Remove(e.Button);
+        internal static void InvokeMouseDownListener(MouseEventArgs e)
+        {
+            TEMP_BUTTON_STATE_LIST.Add(e.Button);
+            CURR_BUTTON_STATE_LIST.Add(e.Button);
+        }
+
+        internal static void InvokeMouseUpListener(MouseEventArgs e) => CURR_BUTTON_STATE_LIST.Remove(e.Button);
 
         internal static void InvokeMouseMoveListener(MouseEventArgs e) => (MouseX, MouseY) = (e.Location.X, e.Location.Y);
         internal static void InvokeMouseWheelListener(MouseEventArgs e) => DWheel = e.Delta;
         #endregion
 
-        public static bool IsButtonDown(MouseButtons button) => BUTTON_STATE_LIST.Contains(button);
+        public static bool WasButtonDown(MouseButtons button) => TEMP_BUTTON_STATE_LIST.Contains(button);
+        public static bool IsButtonDown(MouseButtons button) => CURR_BUTTON_STATE_LIST.Contains(button);
 
         public static void AddMouseDownListener(MouseEventHandler handler) => StaticDisplay.Instance.MouseDown += handler;
         public static void AddMouseUpListener(MouseEventHandler handler) => StaticDisplay.Instance.MouseUp += handler;

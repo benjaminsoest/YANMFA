@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace YANMFA.Core
@@ -60,7 +61,9 @@ namespace YANMFA.Core
             }
             StaticDisplay.End();
 
-            StaticMouse.ResetDelta(); // Reset delta values
+            StaticMouse.ResetCache(); // Reset delta values
+            StaticKeyboard.ResetCache(); // Reset delta values
+
             // Goes back to GameMenu when game requested to stop
             if (StaticEngine.CurrentGame.IsStopRequested())
                 StaticEngine.ChangeGame(null, GameMode.SINGLEPLAYER);
@@ -68,6 +71,7 @@ namespace YANMFA.Core
 
         private void StaticDisplay_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.SmoothingMode = SmoothingMode.Default;
             if (StaticEngine.IsGameRunning)
                 StaticEngine.CurrentGame.Render(e.Graphics);
             else // Render Splash-Screen
