@@ -53,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Games\Alexandru\Boxhead\Display\Instance\BoxheadControl.cs" />
+    <Compile Include="Games\Alexandru\Boxhead\Display\Menu\Menu.cs" />
+    <Compile Include="Games\Alexandru\Boxhead\Game\Characters\Player.cs" />
     <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\BarrierBlock.cs" />
     <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\Bullet.cs" />
     <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\Crate.cs" />
@@ -129,6 +132,33 @@
     <Folder Include="Games\Alex\SpiderFighter\Models\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Alexandru\Boxhead\boxhead_logo.jpg" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_idle with gun_0.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_idle with gun_1.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_idle with gun_2.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_idle with gun_3.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_idle without gun_0.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_idle without gun_1.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_idle without gun_2.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_idle without gun_3.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_jump shoot_0.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_jump shoot_1.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_jump shoot_2.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_jump shoot_3.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_jump with gun_0.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_jump without gun_0.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_shoot_0.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_shoot_1.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_shoot_2.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_shoot_3.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_walk with gun_0.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_walk with gun_1.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_walk with gun_2.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_walk with gun_3.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_walk without gun_0.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_walk without gun_1.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_walk without gun_2.png" />
+    <Content Include="Assets\Alexandru\Boxhead\Cowboy2_walk without gun_3.png" />
     <Content Include="Assets\Alex\SpiderFighter\Levels\lvl1.txt" />
     <Content Include="Assets\Alex\SpiderFighter\Levels\Test1.txt" />
     <Content Include="Assets\Alex\SpiderFighter\Textures\Background.png" />
