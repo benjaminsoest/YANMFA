@@ -16,24 +16,6 @@ namespace YANMFA.Games.Benjamin.CurveFever
 		public override GameMode GameType => GameMode.MULTIPLAYER;
 		public override Style Style => CurveFeverStyle;
 
-		public override void Render(Graphics g)
-		{
-			base.Render(g);
-		}
-
-		public override void Start(GameMode mode)
-		{
-			base.Start(mode);
-		}
-
-		public override void Stop()
-		{
-			base.Stop();
-		}
-
-		public override void Update()
-		{
-			base.Update();
-		}
+		
 	}
 }
