@@ -70,6 +70,10 @@
     <Compile Include="Games\Alex\SpiderFighter\Round.cs" />
     <Compile Include="Games\Alex\SpiderFighter\SpiderFighterGame.cs" />
     <Compile Include="Games\Alex\SpiderFighter\Tools\Vector.cs" />
+    <Compile Include="Games\Lars\Donkey Kong\Barrel.cs" />
+    <Compile Include="Games\Lars\Donkey Kong\DonkeyKongControl.cs" />
+    <Compile Include="Games\Lars\Donkey Kong\Player.cs" />
+    <Compile Include="Games\Lars\Donkey Kong\Stage.cs" />
     <Compile Include="Games\Lars\Snake\SnakeBerry.cs" />
     <Compile Include="Games\Benjamin\Utils\Game.cs" />
     <Compile Include="Games\Benjamin\Utils\Style.cs" />
@@ -159,6 +163,7 @@
     <Content Include="Assets\Alex\SpiderFighter\Textures\woodcorner.png" />
     <Content Include="Assets\Alex\SpiderFighter\Textures\woodplank1.png" />
     <Content Include="Assets\Alex\SpiderFighter\Textures\woodwall.png" />
+    <Content Include="Assets\Lars\Donkey Kong\Logo.png" />
     <Content Include="Assets\Lars\Snake\Eyes.png" />
     <Content Include="Assets\Lars\Snake\Logo.png" />
     <Content Include="Assets\Lars\Snake\LoadingScreen.png" />

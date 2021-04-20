@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using YANMFA.Games.Alex.SpiderFighter;
+using YANMFA.Games.Lars.Donkey_Kong;
 
 namespace YANMFA.Core
 {
@@ -24,6 +25,7 @@ namespace YANMFA.Core
             { // TODO: Add Games here
                 Games.Add(new SnakeControl());
                 Games.Add(new SpiderFighterGame());
+                Games.Add(new DonkeyKongControl());
             }
             ChangeGame(null, GameMode.SINGLEPLAYER); // Change game to GameMenu
         }
