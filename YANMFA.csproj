@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CB08906E-C1D3-4668-8B35-F2CEE6C6730E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>GDI_GameEngine</RootNamespace>
-    <AssemblyName>GDI_GameEngine</AssemblyName>
+    <RootNamespace>YANMFA</RootNamespace>
+    <AssemblyName>YANMFA</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -41,6 +41,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +53,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\BarrierBlock.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\Bullet.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\Crate.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\DecoBlock.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Decorations\Door.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Item.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Items\Potions.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Items\Weapon.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Level.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Mobs\Human.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Mobs\Mob.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Mobs\Spider.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Models\Textures.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Repository\LevelRepos.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Round.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\SpiderFighterGame.cs" />
+    <Compile Include="Games\Alex\SpiderFighter\Tools\Vector.cs" />
+    <Compile Include="Games\Lars\Donkey Kong\Barrel.cs" />
+    <Compile Include="Games\Lars\Donkey Kong\DonkeyKongControl.cs" />
+    <Compile Include="Games\Lars\Donkey Kong\Player.cs" />
+    <Compile Include="Games\Lars\Donkey Kong\Stage.cs" />
+    <Compile Include="Games\Lars\Snake\SnakeBerry.cs" />
+    <Compile Include="Games\Benjamin\Utils\Game.cs" />
+    <Compile Include="Games\Benjamin\Utils\Style.cs" />
+    <Compile Include="Games\Benjamin\Utils\UiElement.cs" />
+    <Compile Include="Games\Benjamin\Utils\Vector2D.cs" />
     <Compile Include="Games\Edgar\FlipFlopFPS\Events.cs" />
     <Compile Include="Games\Edgar\FlipFlopFPS\FlipFlopFPS.cs" />
     <Compile Include="Games\Edgar\FlipFlopFPS\WorldOBJ.cs" />
@@ -66,11 +93,15 @@
     <Compile Include="Core\Input\StaticKeyboard.cs" />
     <Compile Include="Core\Input\StaticMouse.cs" />
     <Compile Include="Core\StaticEngine.cs" />
+    <Compile Include="Games\Lars\Snake\SnakePlayer.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\GameMenu.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\GuiComponent.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\Layout\GridLayout.cs" />
+    <Compile Include="Games\Paolo\MyGameMenu\Layout\RelativeLayout.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\Main\GameButton.cs" />
-    <Compile Include="Games\Paolo\MyGameMenu\Main\GuiMainMenu.cs" />
+    <Compile Include="Games\Paolo\MyGameMenu\Main\GuiModeMenu.cs" />
+    <Compile Include="Games\Paolo\MyGameMenu\Main\GuiGameMenu.cs" />
+    <Compile Include="Games\Paolo\MyGameMenu\Main\ModeButton.cs" />
     <Compile Include="Games\Paolo\MyGameMenu\NavComponent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,7 +116,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -99,10 +132,47 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="Games\Alex\SpiderFighter\Models\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Alex\SpiderFighter\Levels\lvl1.txt" />
+    <Content Include="Assets\Alex\SpiderFighter\Levels\Test1.txt" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\Background.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\bookshelf.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\brick.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\brickstone.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\crate.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\deepdark.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\dirt2.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\download.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\Floortexture1.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\grass1.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\humanleft.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\humanleftwalk.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\humanright.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\humanrightwalk.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\irondoor.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\irondoorclose.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\Rastergrafik.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\rifleleft.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\rifleleftshoot.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\rifleright.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\riflerightshoot.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\table.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\torch.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\window.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\wood1.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\woodcorner.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\woodplank1.png" />
+    <Content Include="Assets\Alex\SpiderFighter\Textures\woodwall.png" />
+    <Content Include="Assets\Lars\Donkey Kong\Logo.png" />
+    <Content Include="Assets\Lars\Snake\Eyes.png" />
     <Content Include="Assets\Edgar\FlipFlopFPS\test image.png" />
     <Content Include="Assets\Lars\Snake\Logo.png" />
+    <Content Include="Assets\Lars\Snake\LoadingScreen.png" />
+    <Content Include="Assets\Paolo\MyGameMenu\multiplayer.png" />
+    <Content Include="Assets\Paolo\MyGameMenu\singleplayer.png" />
     <Content Include="Assets\Paolo\MyGameMenu\yanmfa-logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

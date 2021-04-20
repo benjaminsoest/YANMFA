@@ -1,6 +1,6 @@
 using System;
 
-namespace School_utils
+namespace YANMFA.Games.Benjamin.Utils
 {
     public struct Vector2D : IEquatable<Vector2D>, IComparable<Vector2D>, IComparable<double>
     {
@@ -19,7 +19,7 @@ namespace School_utils
         public override string ToString() => $"({X} ,{Y})";
         public bool Equals(Vector2D other) => X == other.X && Y == other.Y;
         public override bool Equals(object obj) => obj is Vector2D && Equals((Vector2D)obj);
-        public override int GetHashCode() => HashCode.Combine(X, Y);
+        public override int GetHashCode() => (X, Y).GetHashCode();
         
         public int CompareTo(Vector2D other) => Length.CompareTo(other.Length);
         public int CompareTo(double d) => Length.CompareTo(d);

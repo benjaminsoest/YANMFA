@@ -11,8 +11,13 @@ namespace YANMFA.Games.Paolo.MyGameMenu
 
         private Bitmap ResizedImage { get; set; }
 
+        private readonly GameMenu Instance;
         private readonly IGameInstance Game;
-        public GameButton(IGameInstance game) => Game = game;
+        public GameButton(GameMenu instance, IGameInstance game)
+        {
+            Instance = instance;
+            Game = game;
+        }
 
         public override void Render(Graphics g)
         {
@@ -27,7 +32,10 @@ namespace YANMFA.Games.Paolo.MyGameMenu
         {
             base.MouseUp(e);
             if (Bounds.Contains(StaticMouse.MouseX, StaticMouse.MouseY))
-                StaticEngine.ChangeGame(Game);
+            {
+                Instance.GuiModeMenu.Game = Game;
+                Instance.ChangeScreen(Instance.GuiModeMenu);
+            }
         }
 
         public override void SetBounds(int x, int y, int width, int height)

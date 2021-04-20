@@ -18,7 +18,22 @@ namespace YANMFA.Games.Paolo.MyGameMenu
         public void Add(GuiComponent item, Rectangle gridEntry)
         {
             GridEntries.Add(gridEntry);
-            Add(item);
+            base.Add(item);
+        }
+
+        public new void Add(GuiComponent comp) => throw new InvalidOperationException();
+        public new void Remove(GuiComponent comp) => throw new InvalidOperationException();
+
+        public new void RemoveAt(int index)
+        {
+            GridEntries.RemoveAt(index);
+            base.RemoveAt(index);
+        }
+
+        public new void Clear()
+        {
+            GridEntries.Clear();
+            base.Clear();
         }
 
         public override void SetBounds(int x, int y, int width, int height)
@@ -35,7 +50,7 @@ namespace YANMFA.Games.Paolo.MyGameMenu
                 Rectangle gridEntry = GridEntries[i];
                 float entryWidth = gridWidth * gridEntry.Width + padX * (gridEntry.Width - 1f);
                 float entryHeight = gridHeight * gridEntry.Height + padY * (gridEntry.Height - 1f);
-                if (entryWidth < 0 || entryHeight < 0)
+                if (entryWidth < 0f || entryHeight < 0f)
                     throw new InvalidOperationException();
 
                 float entryX = padX + (padX + gridWidth) * gridEntry.X;
