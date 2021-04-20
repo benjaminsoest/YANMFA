@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using YANMFA.Games.Alex.SpiderFighter;
+using System.Threading.Tasks;
 
 namespace YANMFA.Core
 {
@@ -34,19 +35,18 @@ namespace YANMFA.Core
          * You don't have to bother with this. (Only used in GameEngine & GameMenu!)
          * Stops the previous game and starts a new one in a new thread.
          */
-        [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
         public static void ChangeGame(IGameInstance game, GameMode mode)
         {
             IGameInstance tmpGame = CurrentGame;
             CurrentGame = game ?? Games[0];
             IsGameRunning = false;
 
-            new Thread(new ThreadStart(() =>
+            Task.Run(() =>
             {
                 tmpGame?.Stop();
                 CurrentGame?.Start(mode);
                 IsGameRunning = true;
-            })).Start();
+            });
         }
 
     }

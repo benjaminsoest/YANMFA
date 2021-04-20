@@ -49,17 +49,14 @@ namespace YANMFA.Core
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "YANMFA!";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Display_Paint);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Display_KeyDown);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Display_KeyPress);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Display_KeyUp);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Display_MouseClick);
-            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Display_MouseDoubleClick);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Display_MouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Display_MouseMove);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Display_MouseUp);
-            this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.Display_MouseWheel);
-            this.Resize += new System.EventHandler(this.Display_Resize);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.StaticDisplay_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StaticDisplay_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.StaticDisplay_KeyUp);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.StaticDisplay_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.StaticDisplay_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.StaticDisplay_MouseUp);
+            this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.StaticDisplay_MouseWheel);
+            this.Resize += new System.EventHandler(this.StaticDisplay_Resize);
             this.ResumeLayout(false);
 
         }
