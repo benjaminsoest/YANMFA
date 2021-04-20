@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace YANMFA.Core
 {
     public partial class StaticDisplay : Form
     {
-        private static HashSet<char> PRESSED_KEYS = new HashSet<char>();
-        private static HashSet<MouseButtons> PRESSED_MOUSE_BUTTONS = new HashSet<MouseButtons>();
-        private static readonly List<EventHandler> RESIZE_LISTENER = new List<EventHandler>();
+
+        internal static StaticDisplay Instance { get; private set; }
+
         private static readonly Stopwatch Stopwatch = new Stopwatch();
 
         /**
@@ -42,16 +42,9 @@ namespace YANMFA.Core
 
         public StaticDisplay()
         {
+            Instance = this;
             InitializeComponent();
-            Display_Resize(this, EventArgs.Empty);
-        }
-
-        private void Display_Paint(object sender, PaintEventArgs e)
-        {
-            if (StaticEngine.IsGameRunning)
-                StaticEngine.CurrentGame.Render(e.Graphics);
-            else // Render Splash-Screen
-                StaticEngine.CurrentGame.RenderSplash(e.Graphics);
+            StaticDisplay_Resize(this, EventArgs.Empty);
         }
 
         private void tmrGameUpdate_Tick(object sender, EventArgs e)
@@ -61,66 +54,50 @@ namespace YANMFA.Core
             StaticDisplay.Begin();
             {
                 if (StaticEngine.IsGameRunning)
-				{
-                    (PRESSED_KEYS, StaticKeyboard.PRESSED_KEYS) = (StaticKeyboard.PRESSED_KEYS, PRESSED_KEYS);
-                    PRESSED_KEYS.Clear();
-                    (PRESSED_MOUSE_BUTTONS, StaticMouse.PRESSED_MOUSE_BUTTONS) = (StaticMouse.PRESSED_MOUSE_BUTTONS, PRESSED_MOUSE_BUTTONS);
-                    PRESSED_MOUSE_BUTTONS.Clear();
                     StaticEngine.CurrentGame.Update();
-				}
-				else // Update Splash-Screen
+                else // Update Splash-Screen
                     StaticEngine.CurrentGame.UpdateSplash();
                 Refresh();
             }
             StaticDisplay.End();
-            StaticMouse.ResetDelta(); // Reset delta values
+
+            StaticMouse.ResetCache(); // Reset delta values
+            StaticKeyboard.ResetCache(); // Reset delta values
 
             // Goes back to GameMenu when game requested to stop
             if (StaticEngine.CurrentGame.IsStopRequested())
                 StaticEngine.ChangeGame(null, GameMode.SINGLEPLAYER);
         }
 
-        private void Display_Resize(object sender, EventArgs e)
+        private void StaticDisplay_Paint(object sender, PaintEventArgs e)
         {
-            StaticDisplay.InvokeResizeListener(ClientSize, sender, e);
+            e.Graphics.SmoothingMode = SmoothingMode.Default;
+            if (StaticEngine.IsGameRunning)
+                StaticEngine.CurrentGame.Render(e.Graphics);
+            else // Render Splash-Screen
+                StaticEngine.CurrentGame.RenderSplash(e.Graphics);
+        }
+
+        private void StaticDisplay_MouseDown(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseDownListener(e);
+        private void StaticDisplay_MouseUp(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseUpListener(e);
+        private void StaticDisplay_MouseMove(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseMoveListener(e);
+        private void StaticDisplay_MouseWheel(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseWheelListener(e);
+
+        private void StaticDisplay_KeyDown(object sender, KeyEventArgs e) => StaticKeyboard.InvokeKeyDownListener(e);
+        private void StaticDisplay_KeyUp(object sender, KeyEventArgs e) => StaticKeyboard.InvokeKeyUpListener(e);
+
+        private void StaticDisplay_Resize(object sender, EventArgs e)
+        {
+            StaticDisplay.InvokeResizeListener(ClientSize);
             Refresh(); // Refresh screen when resizing
         }
 
-        private void Display_MouseDown(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseDownListener(sender, e);
-        private void Display_MouseMove(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseMoveListener(sender, e);
-        private void Display_MouseUp(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseUpListener(sender, e);
-        private void Display_MouseWheel(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseWheelListener(sender, e);
-		private void Display_MouseClick(object sender, MouseEventArgs e)
-		{
-            PRESSED_MOUSE_BUTTONS.Add(e.Button);
-			StaticMouse.InvokeMouseClickListener(sender, e);
-		}
-
-		private void Display_MouseDoubleClick(object sender, MouseEventArgs e) => StaticMouse.InvokeMouseDoubleClickListener(sender, e);
-
-        private void Display_KeyDown(object sender, KeyEventArgs e) => StaticKeyboard.InvokeKeyDownListener(sender, e);
-        private void Display_KeyUp(object sender, KeyEventArgs e) => StaticKeyboard.InvokeKeyUpListener(sender, e);
-		private void Display_KeyPress(object sender, KeyPressEventArgs e)
-		{
-            PRESSED_KEYS.Add(e.KeyChar);
-			StaticKeyboard.InvokeKeyPressListener(sender, e);
-		}
-
 		#region GameEngine region
-		[Obsolete("This method is reserved for the GameEngine. Don't use it!")]
-        static void InvokeResizeListener(Size size, object sender, EventArgs e)
-        {
-            DisplayWidth = size.Width;
-            DisplayHeight = size.Height;
-            for (int i = RESIZE_LISTENER.Count - 1; i >= 0; i--)
-                RESIZE_LISTENER[i]?.Invoke(sender, e);
-        }
+        internal static void InvokeResizeListener(Size size) => (DisplayWidth, DisplayHeight) = (size.Width, size.Height);
 
-        [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
-        static void Begin() => Stopwatch.Restart();
+        internal static void Begin() => Stopwatch.Restart();
 
-        [Obsolete("This method is reserved for the GameEngine. Don't use it!")]
-        static void End()
+        internal static void End()
         {
             double expected = 1000d / FPSCap;
             double minElapsedTime = Stopwatch.ElapsedMilliseconds + expected;
@@ -130,13 +107,8 @@ namespace YANMFA.Core
         }
         #endregion
 
-        public static void AddResizeListener(EventHandler handler)
-        {
-            if(!RESIZE_LISTENER.Contains(handler))
-                RESIZE_LISTENER.Add(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
-        }
-
-        public static bool RemoveResizeListener(EventHandler handler) => RESIZE_LISTENER.Remove(handler ?? throw new ArgumentException("Parameter cannot be null", nameof(handler)));
+        public static void AddResizeListener(EventHandler handler) => StaticDisplay.Instance.Resize += handler;
+        public static void RemoveResizeListener(EventHandler handler) => StaticDisplay.Instance.Resize -= handler;
 
     }
 }

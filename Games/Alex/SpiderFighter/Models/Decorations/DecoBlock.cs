@@ -1,5 +1,7 @@
 ﻿using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using YANMFA.Core;
 
 namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
 {
@@ -21,7 +23,7 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
 
         public override void Render(Graphics g)
         {
-            g.DrawImage(CurrentTexture, _hitbox);            
+            g.DrawImage(CurrentTexture, _hitbox);
         }
 
         public override void Update()

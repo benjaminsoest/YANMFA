@@ -1,3 +1,4 @@
+1;0;>
 Block;320;400;80;80;Grass;True;>
 Block;400;400;80;80;Grass;True;>
 Block;480;400;80;80;Grass;True;>
