@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -104,7 +105,7 @@ namespace YANMFA.Core
                 { // Syncronize
                     long endTime = startTick + 1; // 1000ms / 1000fps
                     while (Environment.TickCount < endTime)
-                        Task.Delay(1);
+                        Thread.Sleep(1);
                 }
             }
         }
