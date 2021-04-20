@@ -27,6 +27,7 @@ namespace YANMFA.Games.Alex.SpiderFighter
             Round.LoadLevels();
             Round.CurrentLevel = Round.Levels[0];
             Round.PlayerOne = new Human();
+            Spider spider = new Spider(new RectangleF(200, 400, 80, 80));
 
             StaticDisplay.AddResizeListener(Resize);
             StaticMouse.AddMouseDownListener(MouseDown);

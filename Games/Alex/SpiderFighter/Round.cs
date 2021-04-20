@@ -110,48 +110,69 @@ namespace YANMFA.Games.Alex.SpiderFighter
                 foreach (string line in lines)
                 {
                     string currentdata = "";
-
                     List<string> data = new List<string>();
-                    for (int i = 0; i < line.Length; i++)
-                    {
-                        if (line[i] != ';')
-                        {
-                            currentdata = currentdata + line[i];
-                        }
-                        else
-                        {
-                            currentdata.Replace(';', '\0');
-                            data.Add(currentdata);
-                            currentdata = "";
-                        }
-                    }
-                    Textures.ItemBitmaps.TryGetValue("IronDoorClose", out Bitmap bitmap1);
-                    switch (data[0])
-                    {                        
-                        case "Block":
-                            if (data[6] == "True")
-                            {
-                                Textures.ItemBitmaps.TryGetValue(data[5], out Bitmap bitmap);
-                                var barrier = new BarrierBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])), bitmap);
-                                level.Items.Add(barrier);
-                            }
-                            else if (data[6] == "False")
-                            {
-                                Textures.ItemBitmaps.TryGetValue(data[5], out Bitmap bitmap);
-                                var decoblock = new DecoBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])),bitmap);
-                                level.Items.Add(decoblock);
-                            }
-                            break;
-                        case "Door":
-                            var door = new Door(
-                                new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]),
-                                    (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])), bitmap1);
 
-                            level.Items.Add(door);
-                            break;
-                        default:
-                            break;
+                    if (line == lines[0])
+                    {
+                        for (int i = 0; i < line.Length; i++)
+                        {
+                            if (line[i] != ';')
+                            {
+                                currentdata = currentdata + line[i];
+                            }
+                            else
+                            {
+                                currentdata.Replace(';', '\0');
+                                data.Add(currentdata);
+                                currentdata = "";
+                            }
+                        }
+                        level.Index = (Convert.ToInt32(data[0]), Convert.ToInt32(data[1]));
                     }
+                    else
+                    {
+                        
+                        for (int i = 0; i < line.Length; i++)
+                        {
+                            if (line[i] != ';')
+                            {
+                                currentdata = currentdata + line[i];
+                            }
+                            else
+                            {
+                                currentdata.Replace(';', '\0');
+                                data.Add(currentdata);
+                                currentdata = "";
+                            }
+                        }
+                        Textures.ItemBitmaps.TryGetValue("IronDoorClose", out Bitmap bitmap1);
+                        switch (data[0])
+                        {
+                            case "Block":
+                                if (data[6] == "True")
+                                {
+                                    Textures.ItemBitmaps.TryGetValue(data[5], out Bitmap bitmap);
+                                    var barrier = new BarrierBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])), bitmap);
+                                    level.Items.Add(barrier);
+                                }
+                                else if (data[6] == "False")
+                                {
+                                    Textures.ItemBitmaps.TryGetValue(data[5], out Bitmap bitmap);
+                                    var decoblock = new DecoBlock(new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]), (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])), bitmap);
+                                    level.Items.Add(decoblock);
+                                }
+                                break;
+                            case "Door":
+                                var door = new Door(
+                                    new RectangleF((float)Convert.ToDouble(data[1]), (float)Convert.ToDouble(data[2]),
+                                        (float)Convert.ToDouble(data[3]), (float)Convert.ToDouble(data[4])), bitmap1);
+
+                                level.Items.Add(door);
+                                break;
+                            default:
+                                break;
+                        }
+                    }                    
                 }
                 Levels.Add(level);               
             }
