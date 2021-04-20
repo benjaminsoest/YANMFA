@@ -29,14 +29,7 @@ namespace YANMFA.Core
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.tmrGameUpdate = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
-            // 
-            // tmrGameUpdate
-            // 
-            this.tmrGameUpdate.Enabled = true;
-            this.tmrGameUpdate.Tick += new System.EventHandler(this.tmrGameUpdate_Tick);
             // 
             // StaticDisplay
             // 
@@ -49,6 +42,7 @@ namespace YANMFA.Core
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "YANMFA!";
+            this.Load += new System.EventHandler(this.StaticDisplay_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.StaticDisplay_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.StaticDisplay_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.StaticDisplay_KeyUp);
@@ -62,7 +56,5 @@ namespace YANMFA.Core
         }
 
         #endregion
-
-        private System.Windows.Forms.Timer tmrGameUpdate;
     }
 }

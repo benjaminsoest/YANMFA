@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace YANMFA.Core
@@ -11,13 +11,12 @@ namespace YANMFA.Core
 
         internal static StaticDisplay Instance { get; private set; }
 
-        private static readonly Stopwatch Stopwatch = new Stopwatch();
-
         /**
          * Skipped delta time.
          * Use this to make your Physics dependable on the framerate!
          */
-        public static double FixedDelta { get; private set; }
+        [Obsolete]
+        public static double FixedDelta { get; private set; } = 1d;
 
         /**
          * Current framerate
@@ -44,29 +43,68 @@ namespace YANMFA.Core
         {
             Instance = this;
             InitializeComponent();
-            StaticDisplay_Resize(this, EventArgs.Empty);
         }
 
-        private void tmrGameUpdate_Tick(object sender, EventArgs e)
+        private void StaticDisplay_Load(object sender, EventArgs e)
         {
-            tmrGameUpdate.Interval = Math.Max(1, 1000 / StaticDisplay.FPSCap);
+            StaticDisplay_Resize(this, EventArgs.Empty);
+            Task.Run(GameLoop);
+        }
 
-            StaticDisplay.Begin();
+        private void GameLoop()
+        {
+            Action RefreshAction = () => Refresh();
+
+            long lastUpdateTick = Environment.TickCount;
+            long elapsedUpdateSteps = 0;
+
+            long lastFpsTick = Environment.TickCount;
+            int fpsCount = 0;
+
+            while(Visible)
             {
-                if (StaticEngine.IsGameRunning)
-                    StaticEngine.CurrentGame.Update();
-                else // Update Splash-Screen
-                    StaticEngine.CurrentGame.UpdateSplash();
-                Refresh();
+                long startTick = Environment.TickCount;
+                long elapsedTicks = startTick - lastUpdateTick;
+                elapsedUpdateSteps += elapsedTicks;
+                lastUpdateTick = startTick;
+
+                long expectedMs = 1000 / FPSCap;
+                while (elapsedUpdateSteps >= expectedMs)
+                {
+                    if (StaticEngine.IsGameRunning)
+                        StaticEngine.CurrentGame.Update();
+                    else // Update Splash-Screen
+                        StaticEngine.CurrentGame.UpdateSplash();
+
+                    StaticMouse.ResetCache(); // Reset delta values
+                    StaticKeyboard.ResetCache(); // Reset delta values
+
+                    // Goes back to GameMenu when game requested to stop
+                    if (StaticEngine.CurrentGame.IsStopRequested())
+                        StaticEngine.ChangeGame(null, GameMode.SINGLEPLAYER);
+                    elapsedUpdateSteps -= expectedMs;
+                }
+
+                try
+                {
+                    Invoke(RefreshAction);
+
+                    fpsCount++;
+                    if (Environment.TickCount - lastFpsTick > 1000)
+                    {
+                        FPSCount = fpsCount;
+                        lastFpsTick = Environment.TickCount;
+                        fpsCount = 0;
+                    }
+                }
+                catch (Exception) { }
+
+                { // Syncronize
+                    long endTime = startTick + 1; // 1000ms / 1000fps
+                    while (Environment.TickCount < endTime)
+                        Task.Delay(1);
+                }
             }
-            StaticDisplay.End();
-
-            StaticMouse.ResetCache(); // Reset delta values
-            StaticKeyboard.ResetCache(); // Reset delta values
-
-            // Goes back to GameMenu when game requested to stop
-            if (StaticEngine.CurrentGame.IsStopRequested())
-                StaticEngine.ChangeGame(null, GameMode.SINGLEPLAYER);
         }
 
         private void StaticDisplay_Paint(object sender, PaintEventArgs e)
@@ -94,17 +132,6 @@ namespace YANMFA.Core
 
 		#region GameEngine region
         internal static void InvokeResizeListener(Size size) => (DisplayWidth, DisplayHeight) = (size.Width, size.Height);
-
-        internal static void Begin() => Stopwatch.Restart();
-
-        internal static void End()
-        {
-            double expected = 1000d / FPSCap;
-            double minElapsedTime = Stopwatch.ElapsedMilliseconds + expected;
-
-            FixedDelta = minElapsedTime / expected;
-            FPSCount = (int)(1000d / minElapsedTime);
-        }
         #endregion
 
         public static void AddResizeListener(EventHandler handler) => StaticDisplay.Instance.Resize += handler;
