@@ -22,13 +22,15 @@ namespace YANMFA.Games.Alex.SpiderFighter
         {
             Round.StartHeight = StaticDisplay.DisplayHeight;
             Round.StartWidth = StaticDisplay.DisplayWidth;
-            StaticDisplay.FPSCap = 150;
+            StaticDisplay.FPSCap = 80;
             Textures.LoadTextures();
             Round.LoadLevels();
-            Round.CurrentLevel = Round.Levels[0];
+            Round.CurrentLevel = Round.Levels[1];
             Round.PlayerOne = new Human();
             Spider spider = new Spider(new RectangleF(200, 400, 80, 80));
-
+            Spider spider1 = new Spider(new RectangleF(800, 400, 80, 80));
+            Spider spider2 = new Spider(new RectangleF(600, 400, 80, 80));
+            Spider spider3 = new Spider(new RectangleF(1000, 400, 80, 80));
             StaticDisplay.AddResizeListener(Resize);
             StaticMouse.AddMouseDownListener(MouseDown);
             StaticKeyboard.AddKeyDownListener(KeyDown);
