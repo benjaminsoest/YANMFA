@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using YANMFA.Core;
+using YANMFA.Games.Benjamin.Utils.Ui;
 
 namespace YANMFA.Games.Benjamin.Utils
 {
@@ -15,7 +16,7 @@ namespace YANMFA.Games.Benjamin.Utils
 		public abstract string GameName { get; }
 		public abstract string GameDescription { get; }
 		public abstract GameMode GameType { get; }
-		public abstract Style Style { get; }
+		public virtual Style Style { get => Style.DefaultStyle; }
 
 		public Image GetTitleImage() => new Bitmap(1, 1); // TODO
 
@@ -23,40 +24,50 @@ namespace YANMFA.Games.Benjamin.Utils
 		public void UpdateSplash() {}
 		public void RenderSplash(Graphics g) {}
 
-		public Dictionary<string, Bitmap> Images;
-		public Dictionary<string, UiElement> UiElements;
-		public MouseEventArgs LastMouseUpArgs;
-		public MouseEventHandler MouseUpListener;
+		public Dictionary<string, Image> Images { get; set; }
+		public UiPanel Ui { get; set; }
 
-		public virtual void Start(GameMode mode)
+		public bool RequestStop;
+		public bool Paused;
+
+		public void Start(GameMode gameMode)
 		{
+			Paused = false;
+			RequestStop = false;
 			if (AssetDirectory != "")
-				Images = LoadAssets(AssetDirectory, filePath => new Bitmap(filePath), "bmp gif exif jpg png tiff".Split());
-			UiElements = new Dictionary<string, UiElement>();
-			LastMouseUpArgs = null;
-			MouseUpListener = new MouseEventHandler((_, args) => LastMouseUpArgs = args);
-			StaticMouse.AddMouseUpListener(MouseUpListener);
+				Images = LoadAssets<Image>(AssetDirectory, filePath => new Bitmap(filePath), "bmp gif exif jpg png tiff".Split());
+			Ui = new UiPanel((0, 0), (100, 100), null, true, false, false, false);
+			//
+			UiPanel escapeMenu = new UiPanel((30, 30), (40, 40), null, true, true, true, false);
+			escapeMenu["question"] = new UiLabel((0, 0), (100, 60), null, "Du pisser willst echt das Spiel verlassen?!", borderVisible: false, backgroundVisible: false, hightlightVisible: false, visible: false);
+			escapeMenu["yes"] = new UiLabel((10, 60), (45, 30), () => RequestStop = true, "Yes");
+			escapeMenu["no"] = new UiLabel((55, 60), (45, 30), () => escapeMenu.Visible = false, "No");
 		}
-		public virtual void Update()
+		public void Update()
 		{
-
+			if (StaticMouse.WasButtonPressed(MouseButtons.Left))
+				Ui.FindClickedButton((StaticDisplay.DisplayWidth / StaticMouse.MouseX, StaticDisplay.DisplayHeight / StaticMouse.MouseY)).ClickAction();
+			if (!Paused)
+				InternalUpdate();
 		}
-		public virtual void Render(Graphics g)
+		public void Render(Graphics g)
 		{
 			g.FillRectangle(Style.Background.Brush, 0, 0, g.ClipBounds.Width, g.ClipBounds.Height);
-			if (LastMouseUpArgs != null)
-				UiElements.Values.FirstOrDefault(e => e.Enabled && e.Contains(StaticMouse.MouseX, StaticMouse.MouseY))?.ClickAction(LastMouseUpArgs.Button);
-			foreach (var e in UiElements.Values.Where(e => e.Enabled))
-				e.Render(g, Style, e.Contains(StaticMouse.MouseX, StaticMouse.MouseY));
-			LastMouseUpArgs = null;
+			Vector2D pixelSize = (StaticDisplay.DisplayWidth, StaticDisplay.DisplayHeight);
+			Vector2D mousePos = pixelSize / (StaticMouse.MouseX, StaticMouse.MouseY);
+			Ui.Render(g, Style, true, pixelSize, mousePos);
+			if (!Paused)
+				InternalRender(g);
 		}
-		public virtual void Stop()
+		public void Stop()
 		{
-			StaticMouse.RemoveMouseUpListener(MouseUpListener);
 			Images.Values.ToList().ForEach(i => i.Dispose());
 			Images.Clear();
-			UiElements.Clear();
+			Ui = null;
 		}
+		public abstract void InternalUpdate();
+		public abstract void InternalRender(Graphics g);
+
 		public static Dictionary<string, T> LoadAssets<T>(string directory, Func<string, T> buildAsset, params string[] fileEndings)
 		{			
 			var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories).Where(filePath => fileEndings.Any(fileEnding => filePath.EndsWith('.' + fileEnding)));

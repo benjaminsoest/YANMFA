@@ -25,6 +25,11 @@ namespace YANMFA.Games.Benjamin.Utils
         public int CompareTo(double d) => Length.CompareTo(d);
 
         public static explicit operator (double x, double y)(Vector2D v) => (v.X, v.Y);
+        public void Deconstruct(out double x, out double y)
+		{
+            x = X;
+            y = Y;
+		}
 
         public static implicit operator Vector2D((double x, double y) t) => new Vector2D(t.x, t.y);
         public static implicit operator Vector2D((int x, int y) t) => new Vector2D(t.x, t.y);
@@ -37,6 +42,7 @@ namespace YANMFA.Games.Benjamin.Utils
         public static Vector2D operator +(Vector2D a, Vector2D b) => new Vector2D(a.X + b.X, a.Y + b.Y);
         public static Vector2D operator -(Vector2D a, Vector2D b) => new Vector2D(a.X - b.X, a.Y - b.Y);
         public static Vector2D operator *(Vector2D a, Vector2D b) => new Vector2D(a.X * b.X, a.Y * b.Y);
+        public static Vector2D operator /(Vector2D a, Vector2D b) => new Vector2D(a.X / b.X, a.Y / b.Y);
 
         public static bool operator ==(Vector2D a, Vector2D b) => a.X == b.X && a.Y == b.X;
         public static bool operator !=(Vector2D a, Vector2D b) => a.X != b.X || a.Y != b.X;
