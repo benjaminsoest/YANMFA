@@ -9,6 +9,8 @@ namespace YANMFA.Core
     public partial class StaticDisplay : Form
     {
 
+        public const int DefaultFPS = 60;
+
         internal static StaticDisplay Instance { get; private set; }
 
         /**
@@ -32,7 +34,7 @@ namespace YANMFA.Core
         /**
          * Maximum framerate
          */
-        private static int _fpsCap = 60;
+        private static int _fpsCap = DefaultFPS;
         public static int FPSCap
         { // Frames capped from 1 to 1000
             get { return _fpsCap; }
