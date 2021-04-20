@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using YANMFA.Core;
 using YANMFA.Games.Alex.SpiderFighter.Models.Decorations;
@@ -44,6 +45,20 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
 
         public override void Update()
         {
+            if (Hitbox.X <= -1 && Round.CurrentLevel.Index.Item1 != 0)
+            {
+                var levels = Round.Levels.Where(l => l.Index.Item1 == Round.CurrentLevel.Index.Item1 - 1 && l.Index.Item2 == Round.CurrentLevel.Index.Item2).ToList();
+                Round.CurrentLevel = levels[0];
+                _hitbox.X = 10;
+                _hitbox.Y = 100;
+            }
+            if (Hitbox.X >= 1499)
+            {
+                var levels = Round.Levels.Where(l => l.Index.Item1 == Round.CurrentLevel.Index.Item1 + 1 && l.Index.Item2 == Round.CurrentLevel.Index.Item2).ToList();
+                Round.CurrentLevel = levels[0];
+                _hitbox.X = 10;
+                _hitbox.Y = 100;
+            }
             if (Healthpoints <= 0)
             {
                 MessageBox.Show("Game Over!: You died");
