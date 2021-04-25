@@ -10,33 +10,61 @@ namespace YANMFA.Games.Lars.Donkey_Kong
 {
     class Barrel
     {
-        #region variables
-        private RectangleF barrelObject, barrelDraw;
-        private int counter, line;
-        private float position, gravitation;
-        #endregion
+        public RectangleF rPosition { get; set; }
+        public Vector2 Direction { get; set; }
+        public bool MidAir { get; set; }
+        float gravitation;
+        List<Stage> stages;
+        List<bool> firstCollision;
 
-        public Barrel(Point start, int width, float pos)
+        public Barrel(RectangleF r, float g, List<Stage> ls)
         {
-            barrelObject = new RectangleF(start.X, start.Y, width, width);
-            line = 1;
-            barrelDraw = barrelObject;
-            position = pos;
+            rPosition = r;
+            gravitation = g;
+            stages = ls;
+            MidAir = true;
+            firstCollision = new List<bool>();
+            foreach (var item in ls)
+                firstCollision.Add(false);
         }
 
-        #region accessors
-        public int Line { get => line; set => line = value; }
-        public float Gravitation { get => gravitation; set => gravitation = value; }
-        public int Counter { get => counter; set => counter = value; }
-        public RectangleF BarrelObject { get => barrelObject; set => barrelObject = value; }
-        public RectangleF BarrelDraw { get => barrelDraw; }
-        public float Position { get => position; set => position = value; }
-        #endregion
-
-        public void BarrelMovement(Vector2 direction, float time)// Move the barrel along the direction of the ground it is on top. Extra vertical movement is added if the barrel is in the air
+        public void Gravitation()
         {
-            counter++;
-            barrelDraw = new RectangleF((float)(barrelObject.X + (counter / time) * direction.X), (float)(barrelObject.Y + (counter / time) * direction.Y + 3 * gravitation), barrelObject.Width, barrelObject.Height);
+            if (Direction.Y < 10 && MidAir)
+            {
+                Direction = new Vector2(Direction.X, Direction.Y + gravitation);
+            }
+        }
+
+        public void Move()
+        {
+            Gravitation();
+            rPosition = new RectangleF(rPosition.X + Direction.X, rPosition.Y + Direction.Y, rPosition.Width, rPosition.Height);
+            Vector2 pos = new Vector2(rPosition.X, rPosition.Y);
+            Vector2 side = new Vector2(0, rPosition.Height);
+            for (int j = 0; j < stages.Count; j++)
+            {
+                if (stages[j].Collision(pos, side) || stages[j].Collision(new Vector2(pos.X + rPosition.Width, pos.Y), side))
+                {
+                    rPosition = new RectangleF(rPosition.X, stages[j].GetYValue(rPosition.X) - rPosition.Height, rPosition.Width, rPosition.Height);          
+                    MidAir = false;
+                    if (!firstCollision[j])
+                    {
+                        firstCollision[j] = true;
+                        Direction = new Vector2(0, 0);
+                    }
+                    //Console.WriteLine(rPosition.X + "   " + (stages[j].GetYValue(rPosition.X) - rPosition.Height) + "   " + rPosition.Width + "   " + rPosition.Height + "   " + firstCollision[2]);
+                    Direction = new Vector2(Direction.X + (float)Math.Sin(90 - stages[j].GetAngle()) * gravitation * (float)Math.Sin(stages[j].GetAngle()), Direction.Y + (float)Math.Cos(90 - stages[j].GetAngle()) * gravitation * (float)Math.Sin(stages[j].GetAngle()));
+
+                    int s = 9;
+                    if (Direction.Y >= s)
+                        Direction = new Vector2(Direction.X, s);
+                    if (Direction.X >= s)
+                        Direction = new Vector2(s, Direction.Y);
+                    break;
+                }
+                MidAir = true;
+            }
         }
     }
 }

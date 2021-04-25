@@ -214,7 +214,7 @@ namespace YANMFA.Games.Lars.Snake
             {
                 IsKeyDown();
                 tickCounter++;
-                if (tickCounter > 17 && !gameOver)
+                if (tickCounter > 25 && !gameOver)
                 {
                     tickCounter = 0;
                     for (int i = 0; i < player.Length; i++)
