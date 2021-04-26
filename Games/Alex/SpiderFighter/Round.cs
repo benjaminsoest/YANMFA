@@ -147,7 +147,7 @@ namespace YANMFA.Games.Alex.SpiderFighter
                                 currentdata = "";
                             }
                         }
-                        Textures.ItemBitmaps.TryGetValue("IronDoorClose", out Bitmap bitmap1);
+                        Textures.ItemBitmaps.TryGetValue("IrondoorClose", out Bitmap bitmap1);
                         switch (data[0])
                         {
                             case "Block":
