@@ -102,8 +102,8 @@ Block;880;160;80;80;WoodWall;False;>
 Block;1120;240;80;80;WoodWall;False;>
 Block;598;132;80;160;Window;False;>
 Block;1081;131;80;160;Window;False;>
-Block;480;240;80;160;Irondoor;False;>
-Block;1200;240;80;160;Irondoor;False;>
+Door;480;240;80;160;Irondoor;False;>
+Door;1200;240;80;160;Irondoor;False;>
 Block;560;320;80;80;StoneBrick;False;>
 Block;640;320;80;80;StoneBrick;False;>
 Block;800;320;80;80;StoneBrick;False;>
@@ -136,7 +136,7 @@ Block;1360;160;80;80;WoodWall;False;>
 Block;1280;80;80;80;WoodWall;False;>
 Block;1360;80;80;80;WoodWall;False;>
 Block;1360;240;80;80;WoodWall;False;>
-Block;1440;240;80;160;Irondoor;False;>
+Door;1440;240;80;160;Irondoor;False;>
 Block;1280;240;80;160;Crate;False;>
 Block;1360;320;80;80;Crate;False;>
 Block;1920;320;80;80;Crate;True;>

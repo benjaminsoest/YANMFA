@@ -25,8 +25,6 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
         private WalkDirection _walkDirection;
         private const int _maxDistance = 600;
         private const int _gravity = 3;
-        private const int _knockbackWidth = 300;
-        private int _deltaKnockback;
         private int _hitCooldown;
         private const int _maxHitCooldown = 700;
         #endregion
@@ -36,31 +34,14 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
         public override void Update()
         {
             ProofInteractionWithBullets();
-            ProofIntersetionWithPlayer();
 
             _hitCooldown++;
 
             _hitbox.Y += _gravity;
 
-            // Reaction on Knockback action if the humen has been attacked on the left side
-            if (_deltaKnockback > 0 && _walkDirection == WalkDirection.Right)
+            if (IsCollision() && _hitbox.Y >= Round.PlayerOne.Hitbox.Y)
             {
-                _deltaKnockback += 30;
-                _hitbox.X += 30;
-            }
-
-            // Reaction on Knockback action if the humen has been attacked on the right side
-            else if (_deltaKnockback > 0 && _walkDirection == WalkDirection.Left)
-            {
-                _deltaKnockback += 30;
-                _hitbox.X -= 30;
-            }
-
-            // Stopes knockback action if the delta width is higher than the max knockback width
-            if (_deltaKnockback >= _knockbackWidth)
-            {
-                _deltaKnockback = 0;
-                _walkDirection = WalkDirection.None;
+                _hitbox.Y -= 80;
             }
 
             // Procedure when the spider jumps
@@ -89,19 +70,29 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
             }
 
             // Starts the knockback procedure when the spider intersects with the players hitbox
-            if (Round.PlayerOne.Hitbox.IntersectsWith(_hitbox) && _deltaKnockback == 0)
+            if (Round.PlayerOne.Hitbox.IntersectsWith(_hitbox))
             {
                 if (_hitbox.X > Round.PlayerOne.Hitbox.X)
                 {
-                    _deltaKnockback += 30;
+                    if (_hitCooldown >= _maxHitCooldown)
+                        Round.PlayerOne.Knockback(AttackDirection.Right);
+                    
                     _hitbox.X += 30;
                     _walkDirection = WalkDirection.Right;
+                    
                 }
                 else if(_hitbox.X < Round.PlayerOne.Hitbox.X)
                 {
-                    _deltaKnockback += 30;
+                    if (_hitCooldown >= _maxHitCooldown)
+                       Round.PlayerOne.Knockback(AttackDirection.Left);
+                    
                     _hitbox.X -= 30;
                     _walkDirection = WalkDirection.Left;
+                }
+                if (_hitCooldown >= _maxHitCooldown)
+                {
+                    Round.PlayerOne.Healthpoints -= 10;
+                    _hitCooldown = 0;
                 }
             }
         }
@@ -143,13 +134,6 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
             }
         }
 
-        void ProofIntersetionWithPlayer()
-        {
-            if (Round.PlayerOne.Hitbox.IntersectsWith(Hitbox) && _hitCooldown >= _maxHitCooldown)
-            {
-                Round.PlayerOne.Healthpoints -= 10;
-                _hitCooldown = 0;
-            }
-        }
+        
     }
 }

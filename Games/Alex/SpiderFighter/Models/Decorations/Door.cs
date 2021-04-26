@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+using YANMFA.Core;
 
 namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
 {
@@ -9,18 +10,19 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
         
         public Door(RectangleF rectangle, Bitmap bitmap)
         {
-            Hitbox = rectangle;
-            CurrentTexture = bitmap;
+            Hitbox = new RectangleF(rectangle.X, rectangle.Y,rectangle.Width -60,rectangle.Height);
+            CurrentTexture = bitmap;           
         }
 
         public override void Render(Graphics graphics)
         {
-
+            graphics.DrawImage(CurrentTexture, Hitbox);
         }
 
         public override void Update()
-        {
-            base.Update();
+        {            
+            if (OpenState == false)
+                MobResistance();       
         }
 
         public override void MouseDown(MouseEventArgs mouseEventArgs)
@@ -32,18 +34,39 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Decorations
 
         }
 
-        public override void KeyDown(KeyEventArgs keyEventArgs)
+        public override void KeyDown(KeyEventArgs g)
         {
+            if ((Round.PlayerOne.Hitbox.X - Hitbox.X < 0 && Round.PlayerOne.Hitbox.X - Hitbox.X > -200) || Round.PlayerOne.Hitbox.X - Hitbox.X > 0 && Round.PlayerOne.Hitbox.X - Hitbox.X < 200)
+            {
+                if (g.KeyCode == Keys.E && OpenState == true)
+                    CloseDoor();
+                else if (g.KeyCode == Keys.E && OpenState == false)
+                    OpenDoor();
+            }
         }
 
         public void OpenDoor()
         {
-            
+            OpenState = true;
+
+            Textures.ItemBitmaps.TryGetValue("Irondoor", out Bitmap b);
+            {
+                CurrentTexture = b;
+                Hitbox = new RectangleF(Hitbox.X, Hitbox.Y, Hitbox.Width + 60, Hitbox.Height);
+            }
+                               
         }
 
         public void CloseDoor()
         {
-            
+            OpenState = false;
+
+            Textures.ItemBitmaps.TryGetValue("IrondoorClose", out Bitmap b);
+            {
+                CurrentTexture = b;
+                Hitbox = new RectangleF(Hitbox.X, Hitbox.Y, Hitbox.Width - 60, Hitbox.Height);
+            }
+
         }
     }
 }

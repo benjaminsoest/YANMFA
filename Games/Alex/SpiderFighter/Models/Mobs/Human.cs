@@ -18,6 +18,12 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
         private RectangleF _hitbox;
         private WalkDirection _currentWalkDir;
         private WatchDirection _watchDir;
+        private AttackDirection _attackDirection;
+
+        private int _deltaKnockback;
+        private const int _knockbackWidth = 300;
+
+
 
         public override RectangleF Hitbox
         {
@@ -59,6 +65,26 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
                 _hitbox.X = 10;
                 _hitbox.Y = 100;
             }
+
+            if (_attackDirection != AttackDirection.None)
+            {
+                if (_deltaKnockback >= _knockbackWidth)
+                {
+                    _deltaKnockback = 0;
+                    _attackDirection = AttackDirection.None;
+                }
+                else if (_attackDirection == AttackDirection.Right)
+                {
+                    _deltaKnockback += 7;
+                    _hitbox.X -= 7;
+                }
+                else if (_attackDirection == AttackDirection.Left)
+                {
+                    _deltaKnockback += 7;
+                    _hitbox.X += 7;
+                }
+            }
+
             if (Healthpoints <= 0)
             {
                 MessageBox.Show("Game Over!: You died");
@@ -191,6 +217,11 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
             }
             return false;
         }
+
+        public void Knockback(AttackDirection attack)
+        {
+            _attackDirection = attack;
+        }
     }
 
     public enum WalkDirection
@@ -203,6 +234,15 @@ namespace YANMFA.Games.Alex.SpiderFighter.Models.Mobs
 
     public enum WatchDirection
     {
+        Right,
+        Left,
+    }
+
+    public enum AttackDirection
+    {
+        None,
+        Top,
+        Bottom,
         Right,
         Left,
     }
